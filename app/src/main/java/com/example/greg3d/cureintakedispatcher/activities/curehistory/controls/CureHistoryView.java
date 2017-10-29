@@ -10,6 +10,9 @@ import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
  */
 
 public class CureHistoryView {
+        @FindBy(R.id.ch_id)
+        public TextView id_TextView;
+
         @FindBy(R.id.ch_CureName)
         public TextView cureName_TextView;
 

@@ -27,4 +27,8 @@ public class CellHelper {
         this.view = view;
         this.view.setBackgroundColor(Colors.SELECTED_CELL_COLOR);
     }
+
+    public View getView(){
+        return this.view;
+    }
 }

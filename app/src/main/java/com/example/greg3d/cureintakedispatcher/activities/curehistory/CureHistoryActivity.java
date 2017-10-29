@@ -3,6 +3,7 @@ package com.example.greg3d.cureintakedispatcher.activities.curehistory;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.adapters.CellAdapter;
@@ -19,7 +20,7 @@ import com.example.greg3d.cureintakedispatcher.helpers.GridViewHelper;
 
 public class CureHistoryActivity extends Activity implements View.OnClickListener{
 
-    private static final String LOG = "CureHistoryActivity";
+    private static final String LOG_TAG = "CureHistoryActivity";
     GridViewHelper gridView;
 
     private static CureHistoryActivity instance;
@@ -51,11 +52,11 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
         if(v.idEquals(controls.add_Button))
             ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
         if(v.idEquals(controls.buy_Button))
-            Show.show(this, String.valueOf(this.gridView.getSelectedId()));
+            Show.show(this, String.valueOf(getSelectedId()));
 
     }
 
-    public long getSelectedId(){
-        return this.gridView.getSelectedId();
+    public static long getSelectedId(){
+        return Long.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_id)).getText().toString());
     }
 }

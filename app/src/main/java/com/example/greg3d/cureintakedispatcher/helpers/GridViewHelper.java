@@ -41,5 +41,9 @@ public class GridViewHelper {
         return this.cellHelper.getId();
     }
 
+    public View getView(){
+        return this.cellHelper.getView();
+    }
+
 
 }
