@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.CureHistoryView;
-import com.example.greg3d.cureintakedispatcher.controller.DBController;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
+import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.Tools;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 
@@ -19,7 +19,7 @@ import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 public class CellAdapter extends ArrayAdapter<FarmacyHistoryModel>
 {
     public CellAdapter(Context context) {
-        super(context, R.layout.cure_cell, DBController.getInstance().selectRecords(FarmacyHistoryModel.class));
+        super(context, R.layout.cure_cell, DBHelper.getRecords(FarmacyHistoryModel.class));
     }
 
     @Override

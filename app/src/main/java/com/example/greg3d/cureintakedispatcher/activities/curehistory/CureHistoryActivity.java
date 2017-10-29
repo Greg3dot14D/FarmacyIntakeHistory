@@ -54,4 +54,8 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
             Show.show(this, String.valueOf(this.gridView.getSelectedId()));
 
     }
+
+    public long getSelectedId(){
+        return this.gridView.getSelectedId();
+    }
 }

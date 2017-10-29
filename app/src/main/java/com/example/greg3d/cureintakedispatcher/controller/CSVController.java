@@ -4,6 +4,7 @@ import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.helpers.CSVHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
+import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyModel;
 import com.example.greg3d.cureintakedispatcher.model.HistoryRecordModel;
 import com.example.greg3d.cureintakedispatcher.model.SchemeModel;
@@ -26,6 +27,7 @@ public class CSVController {
     }
 
     public static void writeTablesToSD(){
+        writeTable(FarmacyHistoryModel.class);
         writeTable(HistoryRecordModel.class);
         writeTable(FarmacyModel.class);
         writeTable(SchemeModel.class);

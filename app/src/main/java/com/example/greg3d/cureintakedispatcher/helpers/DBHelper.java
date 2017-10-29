@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.greg3d.cureintakedispatcher.fakes.FakeData;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
@@ -38,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //
         instance = this;
 
-        new FakeData(this).createFakes();
+        //new FakeData(this).createFakes();
     }
 
     public static DBHelper getInstance(){
@@ -99,7 +98,16 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "done insert");
     }
 
-    public <T extends BaseModel> void updateRecord(T model){
+    public <T extends BaseModel> T getLastRecord(T model){
+        String query = String.format(
+                "SELECT * FROM [%s] WHERE ID = (SELECT max(ID) FROM [%s])"
+                , model.getClassName()
+                , model.getClassName());
+        return getRecords(model, query).get(0);
+    }
+
+
+        public <T extends BaseModel> void updateRecord(T model){
         String query = String.format(
                 "update [%s] set %s"
                 , model.getClassName()
@@ -231,42 +239,68 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public static <T extends BaseModel> List<T> getRecords(Class<T> clazz){
-        try {
-            T model = clazz.newInstance();
+        return getRecords(clazz, String.format(" SELECT * FROM [%s] WHERE ID > 1", clazz.getAnnotation(Name.class).value()));
+    }
 
-            List<Field> fields = model.getFieldList();
+    public static <T extends BaseModel> List<T> getRecords(T model, String query){
+        return (List<T>)getRecords(model.getClass(), query);
+    }
 
+    public static <T extends BaseModel> List<T> getRecords(Class<T> clazz, String query){
             List<T> list = new ArrayList<>();
-
-            String query = String.format(" SELECT * FROM [%s]", model.getClassName());
-
             Cursor cursor = DBHelper.getDb().rawQuery(query, null);
-
             if (cursor.moveToFirst()) {
                 do {
-                    model = clazz.newInstance();
-                    for (Field f : fields) {
-                        if (f.isAnnotationPresent(Name.class)) {
-                            if (f.getType().equals(Integer.class))
-                                f.set(model, Integer.valueOf(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
-                            else if (f.getType().equals(Date.class))
-                                f.set(model, Tools.stringToDateTime(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
-                            else if (f.getType().equals(Double.class))
-                                f.set(model, Double.valueOf(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
-                            else
-                                f.set(model, cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value())));
-                        }
+                    try {
+                        list.add(fillModel(cursor, clazz.newInstance()));
+                    } catch (InstantiationException e) {
+                        throw new RuntimeException(e.getMessage());
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e.getMessage());
                     }
-                    list.add(model);
                 } while (cursor.moveToNext());
             }
             cursor.close();
             return list;
-        }catch(IllegalAccessException e){
-            throw new RuntimeException(e.getMessage());
-        }catch(InstantiationException e){
-            throw new RuntimeException(e.getMessage());
+//            Cursor cursor = DBHelper.getDb().rawQuery(query, null);
+//
+//            if (cursor.moveToFirst()) {
+//                do {
+//                    model = clazz.newInstance();
+//                    for (Field f : fields) {
+//                        if (f.isAnnotationPresent(Name.class)) {
+//                            if (f.getType().equals(Integer.class))
+//                                f.set(model, Integer.valueOf(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
+//                            else if (f.getType().equals(Date.class))
+//                                f.set(model, Tools.stringToDateTime(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
+//                            else if (f.getType().equals(Double.class))
+//                                f.set(model, Double.valueOf(cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value()))));
+//                            else
+//                                f.set(model, cursor.getString(cursor.getColumnIndex(f.getAnnotation(Name.class).value())));
+//                        }
+//                    }
+//                    list.add(model);
+//                } while (cursor.moveToNext());
+//            }
+//            cursor.close();
+//            return list;
+//        }catch(IllegalAccessException e){
+//            throw new RuntimeException(e.getMessage());
+//        }catch(InstantiationException e){
+//            throw new RuntimeException(e.getMessage());
+//        }
+    }
+
+    private static <T extends BaseModel> T fillModel(Cursor cursor, T model){
+        List<Field> fields = model.getFieldList();
+
+        for(Field f: fields){
+            if(f.isAnnotationPresent(Name.class)) {
+                String fieldName = f.getAnnotation(Name.class).value();
+                model.setValue(fieldName, cursor.getString(cursor.getColumnIndex(fieldName)));
+            }
         }
+        return model;
     }
 
 

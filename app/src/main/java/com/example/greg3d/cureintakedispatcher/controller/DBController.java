@@ -3,14 +3,14 @@ package com.example.greg3d.cureintakedispatcher.controller;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.greg3d.cureintakedispatcher.helpers.DBHelper.getRecords;
 
 /**
  * Created by greg3d on 16.10.17.
@@ -32,42 +32,7 @@ public class DBController {
         return instance;
     }
 
-    public <T extends BaseModel> List<T> selectRecords(Class<T> clazz){
 
-        String query = String.format("SELECT * FROM [%s]", clazz.getAnnotation(Name.class).value());
-
-        Log.d(LOG_TAG, query);
-
-        List<T> list = new ArrayList<>();
-
-        Cursor cursor = DBHelper.getDb().rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                try {
-                    list.add(fillRecord(cursor, clazz.newInstance()));
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e.getMessage());
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return list;
-    }
-
-    private <T extends BaseModel> T fillRecord(Cursor cursor, T model){
-        List<Field> fields = model.getFieldList();
-
-        for(Field f: fields){
-            if(f.isAnnotationPresent(Name.class)) {
-                String fieldName = f.getAnnotation(Name.class).value();
-                model.setValue(fieldName, cursor.getString(cursor.getColumnIndex(fieldName)));
-            }
-        }
-        return model;
-    }
 
     public List<LastIntakeRecord> getLastIntakeRecords(){
 
@@ -117,5 +82,12 @@ public class DBController {
         return record;
     }
 
+    //////////////////////////////////////////////////////////////////////////
+    public <T extends BaseModel> T getLastCureRecordByDate(T model){
+        String query = String.format(
+                "SELECT * FROM [%s] WHERE FARMACY_ID = %s ORDER BY LAST_DATE DESC"
+                , model.getClassName());
+        return getRecords(model, query).get(0);
+    }
 
 }
