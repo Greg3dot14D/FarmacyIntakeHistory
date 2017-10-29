@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/cell_rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/r_LastSchemeSelected"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="RadioButton" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/c_Scheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="Аспирин 3 раза/день по 2 таблетки"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/c_CurrentIntake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="Принял 2 из 3"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/c_IntakeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Прянял в 10:10:00  01/02/17"
+        android:textSize="20dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/c_BalanceDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Осталось дней 7"
+        android:textSize="20dp">
+    </TextView>
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CureIntakeDispatcher</string>
+
+    <string-array name="cures">
+        <item>Кот</item>
+        <item>Кошка</item>
+        <item>Котёнок</item>
+        <item>Животное</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/cell_rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+
+    >
+    <TextView
+        android:id="@+id/ch_CureName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="Аспирин"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/ch_PurchaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="Дата покупки 01/02/17"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/ch_Valume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Объем 250 мг"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/ch_Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Цена 25.50 руб"
+        android:textSize="20dp">
+    </TextView>
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/cell_rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+
+    >
+    <TextView
+        android:id="@+id/ih_Cure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="Аспирин"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/ih_IntakeStatusAndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Принял в 10:10:00  01/02/17"
+        android:textSize="20dp">
+    </TextView>
+    <TextView
+        android:id="@+id/c_IntakeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:textStyle="italic"
+        android:text="Номер приема 2 из 3"
+        android:textSize="20dp">
+    </TextView>
+</LinearLayout>
