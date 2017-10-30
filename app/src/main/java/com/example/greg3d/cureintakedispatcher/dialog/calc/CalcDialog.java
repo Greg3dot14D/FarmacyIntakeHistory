@@ -1,5 +1,6 @@
 package com.example.greg3d.cureintakedispatcher.dialog.calc;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.greg3d.cureintakedispatcher.R;
+import com.example.greg3d.cureintakedispatcher.commands.IObjectCommand;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
@@ -20,9 +22,22 @@ import java.lang.reflect.Field;
 public class CalcDialog extends DialogFragment implements View.OnClickListener{
 
     private Controls controls;
+    private IObjectCommand command;
+
+    public CalcDialog setCommand(IObjectCommand command){
+        this.command = command;
+        return this;
+    }
+
+    public static void show(Activity activity, IObjectCommand command){
+        CalcDialog dialog = new CalcDialog().setCommand(command);
+        dialog.show(activity.getFragmentManager(), "tag");
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
+        getDialog().setTitle("Set Price");
+
         View v = inflater.inflate(R.layout.calcdialog, null, false);
         controls = new Controls();
         ViewFactory.InitView(v, controls);
@@ -32,7 +47,7 @@ public class CalcDialog extends DialogFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        String text = controls.b_text_TextView.getText().toString();
+        String result = controls.b_text_TextView.getText().toString();
 
         Field [] fields = controls.getClass().getFields();
 
@@ -41,16 +56,27 @@ public class CalcDialog extends DialogFragment implements View.OnClickListener{
                 if(f.get(controls).equals(view)) {
                     String name = f.getAnnotation(Name.class).value();
                     if("c".equals(name))
-                        text = "";
+                        result = "0";
+                    else if("del".equals(name)) {
+                        if(result.length() == 1)
+                            result = "0";
+                        else
+                            result = result.substring(0, result.length()-1);
+                    }
+                    else if("Ok".equals(name)){
+                        this.command.execute(result);
+                        this.onDestroyView();
+                        return;
+                    }
+                    else if("0".equals(result))
+                        result = name;
                     else
-                        text += name;
+                        result += name;
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-
-        controls.b_text_TextView.setText(text);
-        //Show.show(view.getContext(), text);
+        controls.b_text_TextView.setText(result);
     }
 }

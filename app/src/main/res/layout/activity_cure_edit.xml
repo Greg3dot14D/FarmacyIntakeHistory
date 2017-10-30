@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textSize="20dp"
         android:inputType="textPersonName"
         android:text="Название" />
 
@@ -18,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textSize="20dp"
         android:inputType="textPersonName"
         android:text="Объем" />
 
@@ -25,6 +27,7 @@
         android:id="@+id/ce_Price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:text="Цена" />
@@ -33,6 +36,7 @@
         android:id="@+id/ce_PurchaseDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:ems="10"
         android:inputType="date"
         android:text="Дата покупки" />

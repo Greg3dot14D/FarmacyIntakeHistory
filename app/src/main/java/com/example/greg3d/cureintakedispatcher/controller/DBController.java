@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
+import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
 
 import java.util.ArrayList;
@@ -32,14 +33,25 @@ public class DBController {
         return instance;
     }
 
+    public static List<FarmacyHistoryModel> getLastFarmacyHistoryRecords(){
+        String query =
+                " SELECT FH.* FROM [FARMACY_TABLE] F, [FARMACY_HISTORY_TABLE] FH " +
+                " WHERE F.ID = FH.FARMACY_ID " +
+                " AND F.LAST_DATE = FH.LAST_DATE" +
+                " ORDER BY FH.LAST_DATE DESC";
+        return DBHelper.getRecords(FarmacyHistoryModel.class, query);
+    }
 
 
     public List<LastIntakeRecord> getLastIntakeRecords(){
 
-        String query = "select S.NAME as S_NAME, H.INTAKE_TIME as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
+        String query =
+                " select S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
                 " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION" +
                 " from [INTAKE_HISTORY_TABLE] H, [INTAKE_SCHEME_TABLE] as S, [FARMACY_TABLE] F " +
-                " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID";
+                " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
+                " and H.LAST_DATE = S.LAST_DATE" +
+                " ORDER BY H.LAST_DATE DESC";
 
         Log.d(LOG_TAG, query);
 

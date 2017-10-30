@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.greg3d.cureintakedispatcher.fakes.FakeData;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
@@ -37,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //
         instance = this;
 
-        //new FakeData(this).createFakes();
+        new FakeData(this).createFakes();
     }
 
     public static DBHelper getInstance(){
@@ -106,6 +107,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return getRecords(model, query).get(0);
     }
 
+    public static <T extends BaseModel> T getRecordById(T model, Long id){
+        String query = String.format(
+                "SELECT * FROM [%s] WHERE ID = %s"
+                //, clazz.getAnnotation(Name.class).value()
+                , model.getClassName()
+                , id.toString());
+        return getRecords(model, query).get(0);
+    }
 
         public <T extends BaseModel> void updateRecord(T model){
         String query = String.format(
@@ -239,7 +248,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public static <T extends BaseModel> List<T> getRecords(Class<T> clazz){
-        return getRecords(clazz, String.format(" SELECT * FROM [%s] WHERE ID > 1", clazz.getAnnotation(Name.class).value()));
+        return getRecords(clazz, String.format(" SELECT * FROM [%s] WHERE DELETED = 0", clazz.getAnnotation(Name.class).value()));
     }
 
     public static <T extends BaseModel> List<T> getRecords(T model, String query){

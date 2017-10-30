@@ -61,6 +61,14 @@ public class Controls {
     @FindBy(R.id.calc_c)
     public Button b_c_Button;
 
+    @Name("del")
+    @FindBy(R.id.calc_del)
+    public Button b_del_Button;
+
+    @Name("Ok")
+    @FindBy(R.id.calc_Ok)
+    public Button b_Ok_Button;
+
     @FindBy(R.id.calc_text)
     public TextView b_text_TextView;
 }

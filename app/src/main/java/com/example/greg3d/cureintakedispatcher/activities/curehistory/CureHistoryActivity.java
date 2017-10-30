@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
+import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.ActivitiesManager;
+import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.GridViewHelper;
+import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 
 /**
  * Created by greg3d on 28.10.17.
@@ -51,12 +54,25 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
 
         if(v.idEquals(controls.add_Button))
             ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
-        if(v.idEquals(controls.buy_Button))
+        if(v.idEquals(controls.buy_Button)) {
+            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
+
+
+            //if(CureEditActivity.getInstance() != null)
+
+            CureEditActivity.getInstance()
+                    .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
+                            getSelectedId()));
             Show.show(this, String.valueOf(getSelectedId()));
+        }
 
     }
 
     public static long getSelectedId(){
         return Long.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_id)).getText().toString());
+    }
+
+    public static void refresh(){
+        instance.gridView.setAdapter(new CellAdapter(instance));
     }
 }

@@ -32,6 +32,10 @@ public class FarmacyHistoryModel extends BaseModel{
     public Double price;
 
     //  "Дата приобретения"
-    @Name("PURCHASE_DATE")
+    @Name("LAST_DATE")
     public Date purchaseDate;
+
+    // "deleted = 1 - запись удалена"
+    @Name("DELETED")
+    public Integer deleted = 0;
 }

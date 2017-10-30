@@ -8,9 +8,11 @@ import android.widget.Spinner;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.adapters.SpinnerAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddBuyDateCommand;
+import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddPriceCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.CureHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
+import com.example.greg3d.cureintakedispatcher.dialog.calc.CalcDialog;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
@@ -21,6 +23,7 @@ import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyModel;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by greg3d on 28.10.17.
@@ -38,12 +41,14 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     private Controls controls;
     public Controls getControls(){return this.controls;}
 
+    private FarmacyHistoryModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cure_edit);
 
-        this.instance = this;
+        instance = this;
         controls = new Controls();
 
         Spinner spinner = (Spinner)findViewById(R.id.ce_Cure_Spinner);
@@ -56,6 +61,11 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
     }
 
+    public void setModel(FarmacyHistoryModel model){
+        this.model = model;
+    }
+
+
     @Override
     public void onClick(View view) {
         ViewHelper v = new ViewHelper(view);
@@ -63,28 +73,42 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         if(v.idEquals(controls.buyDate_EditText))
             new DatePickerDialogImpl(this, Calendar.getInstance().getTime(), new AddBuyDateCommand()).show();
         else if(v.idEquals(controls.save_Button)) {
-            FarmacyHistoryModel model = new FarmacyHistoryModel();
+            FarmacyHistoryModel fhModel = new FarmacyHistoryModel();
 
-            model.name = controls.name_EditText.getText().toString();
-            model.price = Double.valueOf(controls.price_EditText.getText().toString());
-            model.volume = controls.volume_EditText.getText().toString();
-            model.purchaseDate = Tools.stringToDate(controls.volume_EditText.getText().toString(), DateFormat.DATE);
-            addNewRecord(model);
+            fhModel.name = controls.name_EditText.getText().toString();
+            fhModel.price = Double.valueOf(controls.price_EditText.getText().toString());
+            fhModel.volume = controls.volume_EditText.getText().toString();
+            fhModel.purchaseDate = Tools.stringToDate(controls.volume_EditText.getText().toString(), DateFormat.DATE);
+            addNewRecord(fhModel);
+            CureHistoryActivity.refresh();
+            this.finish();
         }
         else if(v.idEquals(controls.cancel_Button))
             Show.show(this, String.valueOf(CureHistoryActivity.getInstance().getSelectedId()));
+        else if(v.idEquals(controls.price_EditText)){
+            CalcDialog.show (this, new AddPriceCommand());
+        }
     }
 
     private void addNewRecord(FarmacyHistoryModel model){
         DBHelper db = DBHelper.getInstance();
-        FarmacyModel fModel = new FarmacyModel();
-        fModel.volume = model.volume;
-        fModel.name = model.name;
-        db.insertRecord(fModel);
+        Date lastDate = new Date();
+        model.purchaseDate = lastDate;
+        if(this.model == null) {
+            FarmacyModel fModel = new FarmacyModel();
+            fModel.volume = model.volume;
+            fModel.name = model.name;
+            fModel.lastDate = lastDate;
 
-        fModel = db.getLastRecord(fModel);
-        model.farmacyId = fModel.id;
+            db.insertRecord(fModel);
 
+            fModel = db.getLastRecord(fModel);
+            model.farmacyId = fModel.id;
+        }
+        else {
+            model.farmacyId = this.model.id;
+            this.model.purchaseDate = lastDate;
+        }
         db.insertRecord(model);
     }
 }

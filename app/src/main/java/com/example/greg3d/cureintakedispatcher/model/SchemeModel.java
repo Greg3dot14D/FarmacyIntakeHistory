@@ -2,6 +2,8 @@ package com.example.greg3d.cureintakedispatcher.model;
 
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 
+import java.util.Date;
+
 /**
  * Created by greg3d on 21.10.17.
  */
@@ -27,5 +29,12 @@ public class SchemeModel extends BaseModel{
     @Name("INTAKE_IN_DAY_COUNT")
     public Integer intake_count;
 
+    //  "Дата приобретения"
+    @Name("LAST_DATE")
+    public Date lastDate;
+
+    // "deleted = 1 - запись удалена"
+    @Name("DELETED")
+    public Integer deleted = 0;
 }
 

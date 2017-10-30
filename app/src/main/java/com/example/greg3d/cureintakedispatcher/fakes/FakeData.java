@@ -30,25 +30,36 @@ public class FakeData {
         this.setFakeFarmacyHistory();
     }
 
+    private Date fakeDate = Tools.stringToDateTime("02:02:02 2017-02-02");
+
     private void setFakeFarmacyHistory(){
         FarmacyHistoryModel model = new FarmacyHistoryModel();
 
         db.dropTable(model);
         db.createTable(model);
 
-        model.farmacyId = 0;
+        model.farmacyId = 1;
         model.name = "Аспирин";
         model.price = 21.5;
         model.volume = "20 мг";
-        model.purchaseDate = new Date();
+
+        model.purchaseDate = fakeDate;
 
         db.insertRecord(model);
 
-        model.farmacyId = 1;
+        model.farmacyId = 2;
         model.name = "Боролгин";
         model.price = 55.75;
         model.volume = "250 мл";
         model.purchaseDate = new Date();
+
+        db.insertRecord(model);
+
+        model.farmacyId = 2;
+        model.name = "Боролгин";
+        model.price = 55.77;
+        model.volume = "250 мл";
+        model.purchaseDate = fakeDate;
 
         db.insertRecord(model);
     }
@@ -61,6 +72,8 @@ public class FakeData {
 
         model.name = "Аспирин";
         model.volume = "20 мг";
+
+        model.lastDate = fakeDate;
 
         db.insertRecord(model);
 
@@ -89,6 +102,13 @@ public class FakeData {
         model.status = 0;
 
         db.insertRecord(model);
+
+        model.intakeNum = 2;
+        model.intakeTime = Tools.stringToDateTime("01:01:01 2017-01-01");
+        model.schemeId = 2;
+        model.status = 0;
+
+        db.insertRecord(model);
     }
 
     private void setFakeScheme(){
@@ -96,6 +116,8 @@ public class FakeData {
 
         db.dropTable(model);
         db.createTable(model);
+
+        model.lastDate = fakeDate;
 
         model.duration = 5;
         model.farmacyId = 1;

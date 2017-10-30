@@ -23,10 +23,14 @@ public class HistoryRecordModel extends BaseModel{
     public Integer status;
 
     //  "Время приема"
-    @Name("INTAKE_TIME")
+    @Name("LAST_DATE")
     public Date intakeTime;
 
     //  "Номер приема за день"
     @Name("INTAKE_NUM")
     public Integer intakeNum;
+
+    // "deleted = 1 - запись удалена"
+    @Name("DELETED")
+    public Integer deleted = 0;
 }

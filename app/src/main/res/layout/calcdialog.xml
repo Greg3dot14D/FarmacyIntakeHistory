@@ -11,7 +11,7 @@
         android:layout_marginRight="20dp"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:text="" />
+        android:text="0" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -35,7 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2" />
-
+            <Button
+                android:id="@+id/calc_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="C" />
         </TableRow>
 
         <TableRow
@@ -57,6 +61,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5" />
+            <Button
+                android:id="@+id/calc_del"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="del" />
 
         </TableRow>
 
@@ -96,11 +105,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="." />
-            <Button
-                android:id="@+id/calc_c"
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+        <TextView
+            android:id="@+id/calc_fake1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="right"
+            android:layout_marginRight="20dp"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/calc_fake2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="C" />
+                android:gravity="right"
+                android:layout_marginRight="20dp"
+                android:text="" />
+            <Button
+                android:id="@+id/calc_Ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ok" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
