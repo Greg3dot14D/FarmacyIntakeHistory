@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
+import com.example.greg3d.cureintakedispatcher.activities.cureedit.State;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
@@ -52,20 +53,39 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         ViewHelper v = new ViewHelper(view);
 
-        if(v.idEquals(controls.add_Button))
-            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
+        if(v.idEquals(controls.add_Button)) {
+            CureEditActivity.state = State.ADD;
+            ActivitiesManager.startCureEditActivity(this, this.gridView.getSelectedId());
+        }
         if(v.idEquals(controls.buy_Button)) {
-            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
-
-
-            //if(CureEditActivity.getInstance() != null)
-
-            CureEditActivity.getInstance()
+            if(!isSelected())
+                return;
+            CureEditActivity.state = State.BUY;
+            CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
-            Show.show(this, String.valueOf(getSelectedId()));
+            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
+        }
+        if(v.idEquals(controls.edit_Button)) {
+            if(!isSelected())
+                return;
+            CureEditActivity.state = State.EDIT;
+            CureEditActivity
+                    .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
+                            getSelectedId()));
+            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
         }
 
+    }
+
+    private boolean isSelected(){
+        try {
+            getSelectedId();
+        }catch(Exception e){
+            Show.show(this, "Запись не выбрана");
+            return false;
+        }
+        return true;
     }
 
     public static long getSelectedId(){

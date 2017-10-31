@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.controls.Controls;
+import com.example.greg3d.cureintakedispatcher.controller.CSVController;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.ActivitiesManager;
@@ -67,7 +68,7 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
         ViewHelper v = new ViewHelper(view);
 
         if(v.idEquals(controls.cancel_Button)){
-            //CSVController.writeTablesToSD();
+            CSVController.writeTablesToSD();
             //this.show();
             //CalcDialog d = new CalcDialog().setCommand(new Command());
             //d.show(getFragmentManager(), "test");

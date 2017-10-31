@@ -3,17 +3,14 @@ package com.example.greg3d.cureintakedispatcher.activities.cureedit;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Spinner;
 
 import com.example.greg3d.cureintakedispatcher.R;
-import com.example.greg3d.cureintakedispatcher.activities.cureedit.adapters.SpinnerAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddBuyDateCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddPriceCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.CureHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
 import com.example.greg3d.cureintakedispatcher.dialog.calc.CalcDialog;
-import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
@@ -41,7 +38,8 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     private Controls controls;
     public Controls getControls(){return this.controls;}
 
-    private FarmacyHistoryModel model;
+    private static FarmacyHistoryModel model;
+    public static int state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +49,28 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         instance = this;
         controls = new Controls();
 
-        Spinner spinner = (Spinner)findViewById(R.id.ce_Cure_Spinner);
-        spinner.setAdapter(new SpinnerAdapter(this));
-        spinner.setSelection(1, true);
+//        Spinner spinner = (Spinner)findViewById(R.id.ce_Cure_Spinner);
+//        spinner.setAdapter(new SpinnerAdapter(this));
+//        spinner.setSelection(1, true);
 
         // Вызываем адаптер
         ActivityFactory.InitActivity(this, controls);
         ActivityFactory.setListener(this, controls);
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
+
+        this.updateFieldsBySelectedRecord();
     }
 
-    public void setModel(FarmacyHistoryModel model){
-        this.model = model;
+    public static void setModel(FarmacyHistoryModel inModel){
+        model = inModel;
     }
 
+//    // Вызывается перед тем, как Активность перестает быть "видимой".
+//    @Override
+//    public void onStop(){
+//        super.onStop();
+//        model = null;
+//    }
 
     @Override
     public void onClick(View view) {
@@ -78,37 +84,65 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
             fhModel.name = controls.name_EditText.getText().toString();
             fhModel.price = Double.valueOf(controls.price_EditText.getText().toString());
             fhModel.volume = controls.volume_EditText.getText().toString();
-            fhModel.purchaseDate = Tools.stringToDate(controls.volume_EditText.getText().toString(), DateFormat.DATE);
-            addNewRecord(fhModel);
+            fhModel.purchaseDate = Tools.stringToDate(controls.buyDate_EditText.getText().toString(), DateFormat.DATE);
+            updateRecord(fhModel);
+
             CureHistoryActivity.refresh();
             this.finish();
         }
         else if(v.idEquals(controls.cancel_Button))
-            Show.show(this, String.valueOf(CureHistoryActivity.getInstance().getSelectedId()));
+            this.finish();
+            //Show.show(this, String.valueOf(CureHistoryActivity.getSelectedId()));
         else if(v.idEquals(controls.price_EditText)){
             CalcDialog.show (this, new AddPriceCommand());
         }
     }
 
-    private void addNewRecord(FarmacyHistoryModel model){
+    // Заполняем поля на форме по значениям выбранной записи
+    private void updateFieldsBySelectedRecord(){
+        if(this.model != null){
+            if(state == State.BUY)
+                controls.buyDate_EditText.setText(Tools.dateToString(new Date()));
+            else
+                controls.buyDate_EditText.setText(Tools.dateToString(model.purchaseDate));
+            controls.price_EditText.setText(model.price.toString());
+            controls.name_EditText.setText(model.name);
+            controls.volume_EditText.setText(model.volume);
+        }
+    }
+
+    private void updateRecord(FarmacyHistoryModel model){
         DBHelper db = DBHelper.getInstance();
-        Date lastDate = new Date();
-        model.purchaseDate = lastDate;
-        if(this.model == null) {
-            FarmacyModel fModel = new FarmacyModel();
-            fModel.volume = model.volume;
-            fModel.name = model.name;
-            fModel.lastDate = lastDate;
 
-            db.insertRecord(fModel);
+        FarmacyModel fModel = new FarmacyModel();
+        fModel.volume = model.volume;
+        fModel.name = model.name;
+        fModel.lastDate = model.purchaseDate;
 
-            fModel = db.getLastRecord(fModel);
-            model.farmacyId = fModel.id;
+        if(this.model != null){
+            model.farmacyId = this.model.farmacyId;
+            fModel.id = this.model.farmacyId;
         }
-        else {
-            model.farmacyId = this.model.id;
-            this.model.purchaseDate = lastDate;
+
+        switch(state){
+            case State.BUY:
+                db.updateRecord(fModel);
+                db.insertRecord(model);
+                break;
+            case State.ADD:
+                db.insertRecord(fModel);
+                fModel = db.getLastRecord(fModel);
+                model.farmacyId = fModel.id;
+                db.insertRecord(model);
+                break;
+            case State.EDIT:
+                fModel.id = this.model.farmacyId;
+                db.updateRecord(fModel);
+
+                model.id = this.model.id;
+                model.farmacyId = this.model.farmacyId;
+                db.updateRecord(model);
+                break;
         }
-        db.insertRecord(model);
     }
 }
