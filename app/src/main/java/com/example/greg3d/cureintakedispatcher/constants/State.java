@@ -1,4 +1,4 @@
-package com.example.greg3d.cureintakedispatcher.activities.cureedit;
+package com.example.greg3d.cureintakedispatcher.constants;
 
 /**
  * Created by greg3d on 31.10.17.

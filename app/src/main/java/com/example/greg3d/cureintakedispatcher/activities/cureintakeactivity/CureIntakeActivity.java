@@ -7,6 +7,8 @@ import android.view.View;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.controls.Controls;
+import com.example.greg3d.cureintakedispatcher.activities.editintake.EditIntakeActivity;
+import com.example.greg3d.cureintakedispatcher.constants.State;
 import com.example.greg3d.cureintakedispatcher.controller.CSVController;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
@@ -82,5 +84,9 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
         if(v.idEquals(controls.intake_Button))
             //CSVController.readTablesFromSD();
             ActivitiesManager.startCureHistoryActivity(this);
+        if(v.idEquals(controls.add_Button)) {
+            EditIntakeActivity.state = State.ADD;
+            ActivitiesManager.startEditIntakeActivity(this);
+        }
     }
 }

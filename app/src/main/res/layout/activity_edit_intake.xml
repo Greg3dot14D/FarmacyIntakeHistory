@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -12,84 +10,84 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/ce_CureName_Label"
+                android:id="@+id/in_CureName_Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:layout_marginLeft="5dp"
                 android:textSize="20dp"
-                android:text="Название" />
-            <EditText
-                android:id="@+id/ce_CureName"
+                android:text="Лекарство" />
+            <Spinner
+                android:id="@+id/in_CureName_Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:textSize="20dp"
-                android:inputType="textPersonName"
-                android:text="Название" />
+                />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/ce_Value_Label"
+                android:id="@+id/in_SchemName_Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:layout_marginLeft="5dp"
                 android:textSize="20dp"
-                android:text="Объем" />
+                android:text="Схема" />
             <EditText
-                android:id="@+id/ce_Value"
+                android:id="@+id/in_SchemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_weight="0.8"
+                android:textSize="20dp"
                 android:inputType="textPersonName"
-                android:text="Объем" />
+                android:text="2 шт 2 раза/день" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/ce_Price_Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:layout_marginLeft="5dp"
-            android:textSize="20dp"
-            android:text="Цена" />
-        <EditText
-            android:id="@+id/ce_Price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:textSize="20dp"
-            android:inputType="numberDecimal"
-            android:text="Цена" />
+            <TextView
+                android:id="@+id/in_Intake_Num_Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:layout_marginLeft="5dp"
+                android:textSize="20dp"
+                android:text="Раз в день" />
+
+            <EditText
+                android:id="@+id/in_Intake_Num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:inputType="number"
+                android:text="2"
+                android:textSize="20dp" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/ce_PurchaseDate_Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:layout_marginLeft="5dp"
-            android:textSize="20dp"
-            android:text="Дата покупки" />
-        <EditText
-            android:id="@+id/ce_PurchaseDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:textSize="20dp"
-            android:inputType="date"
-            android:text="Дата покупки" />
+            <TextView
+                android:id="@+id/in_Duration_Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:layout_marginLeft="5dp"
+                android:textSize="20dp"
+                android:text="Курс дней" />
+
+            <EditText
+                android:id="@+id/in_Duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:inputType="number"
+                android:text="7"
+                android:textSize="20dp" />
         </TableRow>
     </TableLayout>
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -104,7 +102,7 @@
             android:gravity="bottom">
 
             <Button
-                android:id="@+id/ce_save"
+                android:id="@+id/in_save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -113,7 +111,7 @@
                 android:text="Save" />
 
             <Button
-                android:id="@+id/ce_cancel"
+                android:id="@+id/in_cancel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

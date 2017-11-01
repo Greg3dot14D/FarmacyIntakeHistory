@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.CureHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.CureIntakeActivity;
+import com.example.greg3d.cureintakedispatcher.activities.editintake.EditIntakeActivity;
 
 /**
  * Created by greg3d on 26.04.17.
@@ -30,6 +31,11 @@ public class ActivitiesManager {
         //intent.replaceExtras(bundle);
         intent.putExtra("id", id);
         activity.startActivity(intent);
+    }
+
+    public static void startEditIntakeActivity(Activity fragment){
+        Intent intent = new Intent(fragment, EditIntakeActivity.class);
+        fragment.startActivity(intent);
     }
 
 //

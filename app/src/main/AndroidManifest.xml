@@ -37,6 +37,15 @@
                 <category android:name="android.intent.category.GADGET" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.editintake.EditIntakeActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.STATEMESSAGE" />
+                <category android:name="android.intent.category.GADGET" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

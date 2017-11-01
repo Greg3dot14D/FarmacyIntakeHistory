@@ -3,6 +3,7 @@ package com.example.greg3d.cureintakedispatcher.controller;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
@@ -76,11 +77,14 @@ public class DBController {
                 );
         String status = "Х.З.";
         switch(cursor.getInt(cursor.getColumnIndex("STATUS"))){
-            case 0:
+            case IntakeStatus.CANCELED:
                 status = "Пропустил";
                 break;
-            case 1:
+            case IntakeStatus.INTAKED:
                 status = "Принял";
+                break;
+            case IntakeStatus.NEW:
+                status = "Новая";
                 break;
         }
         record.lastIntake = String.format("%s %s",

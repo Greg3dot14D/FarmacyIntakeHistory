@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
-import com.example.greg3d.cureintakedispatcher.activities.cureedit.State;
+import com.example.greg3d.cureintakedispatcher.constants.State;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;

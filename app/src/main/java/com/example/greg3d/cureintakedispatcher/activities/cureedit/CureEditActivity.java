@@ -9,6 +9,7 @@ import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddB
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.commands.AddPriceCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.CureHistoryActivity;
+import com.example.greg3d.cureintakedispatcher.constants.State;
 import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
 import com.example.greg3d.cureintakedispatcher.dialog.calc.CalcDialog;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;

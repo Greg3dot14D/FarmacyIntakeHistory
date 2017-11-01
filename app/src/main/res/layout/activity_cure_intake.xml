@@ -30,6 +30,39 @@
         android:layout_marginRight="10dp">
 
         <Button
+            android:id="@+id/b_add_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.04"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/b_edit_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Edit" />
+        <Button
+            android:id="@+id/b_del_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="-" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="25px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
             android:id="@+id/b_intake_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
