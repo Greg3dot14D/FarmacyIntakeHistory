@@ -2,6 +2,7 @@ package com.example.greg3d.cureintakedispatcher.activities.cureedit.controls;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
@@ -19,10 +20,10 @@ public class Controls {
     public EditText volume_EditText;
 
     @FindBy(R.id.ce_Price)
-    public EditText price_EditText;
+    public TextView price_EditText;
 
     @FindBy(R.id.ce_PurchaseDate)
-    public EditText buyDate_EditText;
+    public TextView buyDate_EditText;
 
     @FindBy(R.id.ce_save)
     public Button save_Button;

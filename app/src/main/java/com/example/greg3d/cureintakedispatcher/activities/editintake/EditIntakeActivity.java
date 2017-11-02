@@ -77,7 +77,7 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
                 scheme.name = controls.schema_EditText.getText().toString();
                 scheme.duration = Integer.valueOf(controls.duration_EditText.getText().toString());
                 // TODO
-                scheme.intake_count = 1;
+                scheme.intake_count = Integer.valueOf(controls.intakeNum_EditText.getText().toString());
                 scheme.farmacyId = ((FarmacyModel)spinner.getSelectedItem()).id;
 
                 db.insertRecord(scheme);
@@ -87,8 +87,9 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
                 HistoryRecordModel intakeModel = new HistoryRecordModel();
                 intakeModel.schemeId = scheme.id;
                 intakeModel.status = IntakeStatus.NEW;
-                intakeModel.intakeNum = Integer.valueOf(controls.intakeNum_EditText.getText().toString());
+                intakeModel.intakeNum = 0;
                 intakeModel.intakeTime = lastDate;
+                intakeModel.daysRemaind = Integer.valueOf(controls.duration_EditText.getText().toString());
 
                 db.insertRecord(intakeModel);
 

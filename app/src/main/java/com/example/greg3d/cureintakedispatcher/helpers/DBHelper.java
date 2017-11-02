@@ -84,6 +84,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    public <T extends BaseModel> void deleteRecord(T model){
+        String query = String.format(
+                "UPDATE [%s] SET DELETED = 1 WHERE ID = %s"
+                , model.getClassName()
+                , model.getValue("ID")
+        );
+        Log.d(LOG_TAG, "DELETE ->" + query);
+        db.execSQL(query);
+    }
+
     public <T extends BaseModel> void insertRecord(T model){
         Log.d(LOG_TAG, "do insert");
         //        "insert into [INTAKE_HISTORY_TABLE] " +
@@ -107,7 +117,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return getRecords(model, query).get(0);
     }
 
-    public static <T extends BaseModel> T getRecordById(T model, Long id){
+    public <T extends BaseModel> T getRecord(T model){
+        String query = String.format(
+                "SELECT * FROM [%s] WHERE ID = %s"
+                , model.getClassName()
+                , model.getValue("ID"));
+        Log.d(LOG_TAG, "getRecord -> " + query);
+        return getRecords(model, query).get(0);
+    }
+
+    public static <T extends BaseModel> T getRecordById(T model, Integer id){
         String query = String.format(
                 "SELECT * FROM [%s] WHERE ID = %s"
                 //, clazz.getAnnotation(Name.class).value()

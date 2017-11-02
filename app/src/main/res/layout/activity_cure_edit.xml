@@ -14,7 +14,8 @@
             <TextView
                 android:id="@+id/ce_CureName_Label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="bottom"
                 android:layout_weight="0.2"
                 android:layout_marginLeft="5dp"
                 android:textSize="20dp"
@@ -34,7 +35,8 @@
             <TextView
                 android:id="@+id/ce_Value_Label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="bottom"
                 android:layout_weight="0.2"
                 android:layout_marginLeft="5dp"
                 android:textSize="20dp"
@@ -54,19 +56,21 @@
         <TextView
             android:id="@+id/ce_Price_Label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="bottom"
             android:layout_weight="0.2"
             android:layout_marginLeft="5dp"
             android:textSize="20dp"
             android:text="Цена" />
-        <EditText
+        <TextView
             android:id="@+id/ce_Price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:layout_weight="0.8"
             android:textSize="20dp"
             android:inputType="numberDecimal"
-            android:text="Цена" />
+            android:text="0.00" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -74,15 +78,17 @@
         <TextView
             android:id="@+id/ce_PurchaseDate_Label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="bottom"
             android:layout_weight="0.2"
             android:layout_marginLeft="5dp"
             android:textSize="20dp"
             android:text="Дата покупки" />
-        <EditText
+        <TextView
             android:id="@+id/ce_PurchaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_weight="0.8"
             android:textSize="20dp"
             android:inputType="date"

@@ -7,6 +7,18 @@
 
     >
     <TextView
+        android:id="@+id/c_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0dp">
+    </TextView>
+    <TextView
+        android:id="@+id/c_schemeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0dp">
+    </TextView>
+    <TextView
         android:id="@+id/c_Scheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

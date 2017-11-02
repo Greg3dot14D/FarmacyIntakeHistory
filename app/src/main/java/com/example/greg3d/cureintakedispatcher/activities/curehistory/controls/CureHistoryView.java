@@ -13,6 +13,9 @@ public class CureHistoryView {
         @FindBy(R.id.ch_id)
         public TextView id_TextView;
 
+        @FindBy(R.id.ch_farmacyId)
+        public TextView farmacyId_TextView;
+
         @FindBy(R.id.ch_CureName)
         public TextView cureName_TextView;
 

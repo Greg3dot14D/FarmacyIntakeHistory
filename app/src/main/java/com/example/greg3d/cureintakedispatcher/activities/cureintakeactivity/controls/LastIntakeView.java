@@ -10,6 +10,12 @@ import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
  */
 
 public class LastIntakeView {
+        @FindBy(R.id.c_id)
+        public TextView id_TextView;
+
+        @FindBy(R.id.c_schemeId)
+        public TextView schemeId_TextView;
+
         @FindBy(R.id.c_Scheme)
         public TextView scheme_TextView;
 

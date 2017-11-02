@@ -37,6 +37,15 @@
             android:text="+" />
 
         <Button
+            android:id="@+id/ch_delCure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.04"
+            android:text="-" />
+
+        <Button
             android:id="@+id/ch_EditCure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

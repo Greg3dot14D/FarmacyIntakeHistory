@@ -32,11 +32,12 @@ public class CellAdapter extends ArrayAdapter<LastIntakeRecord>
         LastIntakeView controls = new LastIntakeView();
         ViewFactory.InitView(convertView, controls);
 
-
+        controls.id_TextView.setText(String.valueOf(cell.id));
+        controls.schemeId_TextView.setText(String.valueOf(cell.schemeId));
         controls.scheme_TextView.setText(cell.schemeName);
         controls.currentIntake_TextView.setText(cell.currentIntake);
         controls.intakeDate_TextView.setText(cell.lastIntake);
-        controls.balanceDays_TextView.setText(cell.dayBalance);
+        controls.balanceDays_TextView.setText(String.valueOf(cell.daysRemaind));
 
         return convertView;
     }

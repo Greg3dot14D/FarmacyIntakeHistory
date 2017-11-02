@@ -30,6 +30,10 @@ public class HistoryRecordModel extends BaseModel{
     @Name("INTAKE_NUM")
     public Integer intakeNum;
 
+    //  "Дней осталось"
+    @Name("DAYS_REMAIND")
+    public Integer daysRemaind = 0;
+
     // "deleted = 1 - запись удалена"
     @Name("DELETED")
     public Integer deleted = 0;

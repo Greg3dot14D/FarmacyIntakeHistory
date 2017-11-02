@@ -10,6 +10,12 @@ import java.util.Date;
 
 public class LastIntakeRecord extends BaseModel{
 
+    @Name("ID")
+    public Integer id;
+
+    @Name("SCHEME_ID")
+    public Integer schemeId;
+
     @Name("Запись выбранна")
     public Boolean selected;
 
@@ -23,7 +29,7 @@ public class LastIntakeRecord extends BaseModel{
     public String lastIntake;
 
     @Name("Осталось дней")
-    public String dayBalance;
+    public String daysRemaind;
 
     //  "Дата приобретения"
     @Name("LAST_DATE")

@@ -13,6 +13,9 @@ public class Controls {
     @FindBy(R.id.ch_AddCure)
     public Button add_Button;
 
+    @FindBy(R.id.ch_delCure)
+    public Button del_Button;
+
     @FindBy(R.id.ch_EditCure)
     public Button edit_Button;
 

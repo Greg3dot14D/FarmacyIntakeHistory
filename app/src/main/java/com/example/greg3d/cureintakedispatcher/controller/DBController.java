@@ -39,6 +39,7 @@ public class DBController {
                 " SELECT FH.* FROM [FARMACY_TABLE] F, [FARMACY_HISTORY_TABLE] FH " +
                 " WHERE F.ID = FH.FARMACY_ID " +
                 " AND F.LAST_DATE = FH.LAST_DATE" +
+                " AND F.DELETED = 0 " +
                 " ORDER BY FH.LAST_DATE DESC";
         return DBHelper.getRecords(FarmacyHistoryModel.class, query);
     }
@@ -47,11 +48,13 @@ public class DBController {
     public List<LastIntakeRecord> getLastIntakeRecords(){
 
         String query =
-                " select S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
-                " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION" +
+                " select H.ID as ID, S.ID as SCHEME_ID, S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
+                " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION," +
+                " H.DAYS_REMAIND as DAYS_REMAIND " +
                 " from [INTAKE_HISTORY_TABLE] H, [INTAKE_SCHEME_TABLE] as S, [FARMACY_TABLE] F " +
                 " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
                 " and H.LAST_DATE = S.LAST_DATE" +
+                " and S.DELETED = 0 " +
                 " ORDER BY H.LAST_DATE DESC";
 
         Log.d(LOG_TAG, query);
@@ -81,10 +84,10 @@ public class DBController {
                 status = "Пропустил";
                 break;
             case IntakeStatus.INTAKED:
-                status = "Принял";
+                status = "Принял   ";
                 break;
             case IntakeStatus.NEW:
-                status = "Новая";
+                status = "Новая    ";
                 break;
         }
         record.lastIntake = String.format("%s %s",
@@ -92,9 +95,12 @@ public class DBController {
                 cursor.getString(cursor.getColumnIndex("ACTION_DATE")));
         record.currentIntake = String.format("Номер приема %s из %s",
                 cursor.getString(cursor.getColumnIndex("INTAKE_ID_DAYE_NUM")),
-                cursor.getString(cursor.getColumnIndex("D_COUNT")));
-        record.dayBalance = String.format("Дней осталось %s",
-                cursor.getString(cursor.getColumnIndex("DURATION")));
+                cursor.getString(cursor.getColumnIndex("D_COUNT"))
+        );
+        record.daysRemaind = String.format("Дней осталось %s",
+                cursor.getString(cursor.getColumnIndex("DAYS_REMAIND")));
+        record.id = Integer.valueOf(cursor.getString(cursor.getColumnIndex("ID")));
+        record.schemeId = Integer.valueOf(cursor.getString(cursor.getColumnIndex("SCHEME_ID")));
         return record;
     }
 

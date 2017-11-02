@@ -40,6 +40,7 @@ public class CellAdapter extends ArrayAdapter<FarmacyHistoryModel>
         ViewFactory.InitView(convertView, controls);
 
         controls.id_TextView.setText(String.valueOf(cell.id));
+        controls.farmacyId_TextView.setText(String.valueOf(cell.farmacyId));
         controls.cureName_TextView.setText(cell.name);
         controls.cureValume_TextView.setText(String.format("Объем %s",cell.volume));
         controls.curePrice_TextView.setText(String.format("Цена %s руб",cell.price));

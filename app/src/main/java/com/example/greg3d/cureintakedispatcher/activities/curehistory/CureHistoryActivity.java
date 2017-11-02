@@ -17,6 +17,7 @@ import com.example.greg3d.cureintakedispatcher.helpers.ActivitiesManager;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.GridViewHelper;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
+import com.example.greg3d.cureintakedispatcher.model.FarmacyModel;
 
 /**
  * Created by greg3d on 28.10.17.
@@ -55,32 +56,39 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
 
         if(v.idEquals(controls.add_Button)) {
             CureEditActivity.state = State.ADD;
-            ActivitiesManager.startCureEditActivity(this, this.gridView.getSelectedId());
+            ActivitiesManager.startCureEditActivity(this, 0);
         }
-        if(v.idEquals(controls.buy_Button)) {
+        else if(v.idEquals(controls.buy_Button)) {
             if(!isSelected())
                 return;
             CureEditActivity.state = State.BUY;
             CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
-            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
+            ActivitiesManager.startCureEditActivity(this,0);
         }
-        if(v.idEquals(controls.edit_Button)) {
+        else if(v.idEquals(controls.edit_Button)) {
             if(!isSelected())
                 return;
             CureEditActivity.state = State.EDIT;
             CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
-            ActivitiesManager.startCureEditActivity(this,this.gridView.getSelectedId());
+            ActivitiesManager.startCureEditActivity(this,0);
         }
-
+        else if(v.idEquals(controls.del_Button)) {
+            if (!isSelected())
+                return;
+            FarmacyModel model = new FarmacyModel();
+            model.id = getSelectedFarmacyId();
+            DBHelper.getInstance().deleteRecord(model);
+            refresh();
+        }
     }
 
     private boolean isSelected(){
         try {
-            getSelectedId();
+            getSelectedFarmacyId();
         }catch(Exception e){
             Show.show(this, "Запись не выбрана");
             return false;
@@ -88,9 +96,14 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
         return true;
     }
 
-    public static long getSelectedId(){
-        return Long.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_id)).getText().toString());
+    public static int getSelectedFarmacyId(){
+        return Integer.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_farmacyId)).getText().toString());
     }
+
+    public static int getSelectedId(){
+        return Integer.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_id)).getText().toString());
+    }
+
 
     public static void refresh(){
         instance.gridView.setAdapter(new CellAdapter(instance));
