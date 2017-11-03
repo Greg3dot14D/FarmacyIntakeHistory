@@ -17,6 +17,9 @@ import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
  */
 public class CellAdapter extends ArrayAdapter<LastIntakeRecord>
 {
+    public CellAdapter(View view) {
+        super(view.getContext(), R.layout.schemecell, DBController.getInstance().getLastIntakeRecords());
+    }
     public CellAdapter(Context context) {
         super(context, R.layout.schemecell, DBController.getInstance().getLastIntakeRecords());
     }
@@ -29,6 +32,10 @@ public class CellAdapter extends ArrayAdapter<LastIntakeRecord>
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.schemecell, null);
 
+        return getView(convertView, cell);
+    }
+
+    public static View getView(View convertView, LastIntakeRecord cell){
         LastIntakeView controls = new LastIntakeView();
         ViewFactory.InitView(convertView, controls);
 

@@ -93,7 +93,7 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         }
         else if(v.idEquals(controls.cancel_Button))
             this.finish();
-            //Show.show(this, String.valueOf(CureHistoryActivity.getSelectedId()));
+            //Show.show(this, String.valueOf(CureHistoryAllActivity.getSelectedId()));
         else if(v.idEquals(controls.price_EditText)){
             CalcDialog.show (this, new AddPriceCommand());
         }

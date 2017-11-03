@@ -15,7 +15,8 @@ import com.example.greg3d.cureintakedispatcher.activities.editintake.EditIntakeA
 public class ActivitiesManager {
 
     public static void startCureIntakeActivity(Activity fragment){
-        Intent intent = new Intent(CureIntakeActivity.getInstance() , CureIntakeActivity.class);
+        //Intent intent = new Intent(CureIntakeActivity.getInstance() , CureIntakeActivity.class);
+        Intent intent = new Intent(fragment, CureIntakeActivity.class);
         fragment.startActivity(intent);
     }
 

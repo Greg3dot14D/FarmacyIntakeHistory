@@ -34,19 +34,55 @@ public class DBController {
         return instance;
     }
 
+    public List<LastIntakeRecord> getAllIntakeHistoryRecords() {
+        String query =
+                " select H.ID as ID, S.ID as SCHEME_ID, S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
+                " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION," +
+                " H.DAYS_REMAIND as DAYS_REMAIND " +
+                " from [INTAKE_HISTORY_TABLE] H, [INTAKE_SCHEME_TABLE] as S, [FARMACY_TABLE] F " +
+                " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
+//                " and S.DELETED = 0 " +
+                " and H.STATUS < 2 " +
+                " ORDER BY H.ID DESC";
+        return getIntakeRecords(query);
+    }
+
+    public static List<FarmacyHistoryModel> getAllFarmacyHistoryRecords(){
+        String query =
+                " SELECT * FROM [FARMACY_HISTORY_TABLE] FH " +
+                " WHERE DELETED = 0 " +
+                //" ORDER BY LAST_DATE DESC";
+                " ORDER BY ID DESC";
+        return DBHelper.getRecords(FarmacyHistoryModel.class, query);
+    }
+
+
     public static List<FarmacyHistoryModel> getLastFarmacyHistoryRecords(){
         String query =
                 " SELECT FH.* FROM [FARMACY_TABLE] F, [FARMACY_HISTORY_TABLE] FH " +
                 " WHERE F.ID = FH.FARMACY_ID " +
                 " AND F.LAST_DATE = FH.LAST_DATE" +
                 " AND F.DELETED = 0 " +
-                " ORDER BY FH.LAST_DATE DESC";
+                " ORDER BY F.NAME";
         return DBHelper.getRecords(FarmacyHistoryModel.class, query);
     }
 
 
-    public List<LastIntakeRecord> getLastIntakeRecords(){
+    private List<LastIntakeRecord> getIntakeRecords(String query){
+        Log.d(LOG_TAG, query);
+        List<LastIntakeRecord> recordList = new ArrayList<>();
+        Cursor cursor = DBHelper.getDb().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                recordList.add(fillLastIntakeRecord(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return recordList;
+    }
 
+
+        public List<LastIntakeRecord> getLastIntakeRecords(){
         String query =
                 " select H.ID as ID, S.ID as SCHEME_ID, S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
                 " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION," +
@@ -55,21 +91,8 @@ public class DBController {
                 " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
                 " and H.LAST_DATE = S.LAST_DATE" +
                 " and S.DELETED = 0 " +
-                " ORDER BY H.LAST_DATE DESC";
-
-        Log.d(LOG_TAG, query);
-
-        List<LastIntakeRecord> recordList = new ArrayList<>();
-
-        Cursor cursor = DBHelper.getDb().rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                recordList.add(fillLastIntakeRecord(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return recordList;
+                " ORDER BY S.NAME";
+        return getIntakeRecords(query);
     }
 
     private LastIntakeRecord fillLastIntakeRecord(Cursor cursor){
@@ -111,5 +134,6 @@ public class DBController {
                 , model.getClassName());
         return getRecords(model, query).get(0);
     }
+
 
 }

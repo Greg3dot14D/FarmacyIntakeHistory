@@ -19,8 +19,8 @@ public class Controls {
     @FindBy(R.id.b_add_intake)
     public Button add_Button;
 
-    @FindBy(R.id.b_edit_intake)
-    public Button edit_Button;
+    @FindBy(R.id.b_start_intake)
+    public Button start_Button;
 
     @FindBy(R.id.b_del_intake)
     public Button del_Button;

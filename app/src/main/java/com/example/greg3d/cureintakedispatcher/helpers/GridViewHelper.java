@@ -15,8 +15,33 @@ public class GridViewHelper {
     private GridView gridView;
     private final CellHelper cellHelper = new CellHelper();
 
-    public GridViewHelper(Activity activity, int id){
-        this.gridView = (GridView)activity.findViewById(id);
+    public GridViewHelper(View view, int id){
+        this.gridView = (GridView)view.findViewById(id);
+        this.init();
+    }
+
+    public GridViewHelper(Activity view, int id){
+        this.gridView = (GridView)view.findViewById(id);
+        this.init();
+    }
+
+//    public GridViewHelper(View view, int id){
+//        this.gridView = (GridView)view.findViewById(id);
+//        // Интервал между строк
+//        this.gridView.setVerticalSpacing(5);
+//        // Интервал между столбцов
+//        this.gridView.setHorizontalSpacing(10);
+//
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                cellHelper.resetSelect();
+//                cellHelper.setSelect(view, id);
+//            }
+//        });
+//    }
+
+    private void init(){
         // Интервал между строк
         this.gridView.setVerticalSpacing(5);
         // Интервал между столбцов
@@ -29,7 +54,6 @@ public class GridViewHelper {
                 cellHelper.setSelect(view, id);
             }
         });
-
     }
 
     public GridViewHelper setAdapter(ListAdapter adapter){

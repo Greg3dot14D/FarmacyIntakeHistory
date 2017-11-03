@@ -35,6 +35,10 @@ public class CellAdapter extends ArrayAdapter<FarmacyHistoryModel>
         if (convertView == null)
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.cure_cell, null);
+        return getView(convertView, cell);
+    }
+
+    public static View getView(View convertView, FarmacyHistoryModel cell) {
 
         CureHistoryView controls = new CureHistoryView();
         ViewFactory.InitView(convertView, controls);

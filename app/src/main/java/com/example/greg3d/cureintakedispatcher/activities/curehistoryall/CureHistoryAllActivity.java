@@ -1,4 +1,4 @@
-package com.example.greg3d.cureintakedispatcher.activities.curehistory;
+package com.example.greg3d.cureintakedispatcher.activities.curehistoryall;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,10 +7,9 @@ import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
-import com.example.greg3d.cureintakedispatcher.activities.curehistoryall.CureHistoryAllActivity;
+import com.example.greg3d.cureintakedispatcher.activities.curehistoryall.adapters.CellAdapter;
+import com.example.greg3d.cureintakedispatcher.activities.curehistoryall.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.constants.State;
-import com.example.greg3d.cureintakedispatcher.activities.curehistory.adapters.CellAdapter;
-import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
@@ -25,13 +24,13 @@ import com.example.greg3d.cureintakedispatcher.model.FarmacyModel;
  * Created by greg3d on 28.10.17.
  */
 
-public class CureHistoryActivity extends Activity implements View.OnClickListener{
+public class CureHistoryAllActivity extends Activity implements View.OnClickListener{
 
     private static final String LOG_TAG = "CureHistoryAllActivity";
     GridViewHelper gridView;
 
-    private static CureHistoryActivity instance;
-    public static CureHistoryActivity getInstance(){
+    private static CureHistoryAllActivity instance;
+    public static CureHistoryAllActivity getInstance(){
         return instance;
     }
     private View view;
@@ -52,12 +51,12 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
     }
 
-    public CureHistoryActivity(){}
+    public CureHistoryAllActivity(){}
 
-    public <T extends View.OnClickListener> CureHistoryActivity(T activity, View view){
+    public <T extends View.OnClickListener> CureHistoryAllActivity(T activity, View view){
         instance = this;
         this.view = view;
-        gridView = new GridViewHelper(view, R.id.gvCureHistory)
+        gridView = new GridViewHelper(view, R.id.gvCureHistoryAll)
                 .setAdapter(new CellAdapter(view.getContext()));
         controls = new Controls();
         ViewFactory.InitView(view, controls);
@@ -73,27 +72,14 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
     public void onClick(Activity activity, View view){
         ViewHelper v = new ViewHelper(view);
 
-        if(v.idEquals(controls.add_Button)) {
-            CureEditActivity.state = State.ADD;
-            ActivitiesManager.startCureEditActivity(activity, 0);
-        }
-        else if(v.idEquals(controls.buy_Button)) {
-            if(!isSelected())
-                return;
-            CureEditActivity.state = State.BUY;
-            CureEditActivity
-                    .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
-                            getSelectedId()));
-            ActivitiesManager.startCureEditActivity(activity,0);
-        }
-        else if(v.idEquals(controls.edit_Button)) {
+        if(v.idEquals(controls.edit_Button)) {
             if(!isSelected())
                 return;
             CureEditActivity.state = State.EDIT;
             CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
-            ActivitiesManager.startCureEditActivity(activity,0);
+            ActivitiesManager.startCureEditActivity(this,0);
         }
         else if(v.idEquals(controls.del_Button)) {
             if (!isSelected())
@@ -123,8 +109,8 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
         return Integer.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.ch_id)).getText().toString());
     }
 
+
     public static void refresh(){
         instance.gridView.setAdapter(new CellAdapter(instance.view.getContext()));
-        CureHistoryAllActivity.refresh();
     }
 }

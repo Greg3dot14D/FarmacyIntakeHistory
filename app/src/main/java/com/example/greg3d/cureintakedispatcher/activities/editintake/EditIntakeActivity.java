@@ -99,13 +99,7 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
             return;
         }
         else if(v.idEquals(controls.cancel_Button)) {
-
-
-            //LinearLayout label = (LinearLayout)spinner.getSelectedView();
-
-            //Show.show(this, ((TextView)label.findViewById(R.id.ce_CureItem)).getText().toString());
-            Show.show(this, "" + ((FarmacyModel)spinner.getSelectedItem()).id);
-            //this.finish();
+            this.finish();
         }
     }
 }

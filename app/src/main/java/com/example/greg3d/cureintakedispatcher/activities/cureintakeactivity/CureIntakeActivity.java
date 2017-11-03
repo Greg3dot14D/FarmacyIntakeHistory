@@ -8,11 +8,13 @@ import android.widget.TextView;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.adapters.CellAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.controls.Controls;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.CureIntakeHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.activities.editintake.EditIntakeActivity;
 import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.constants.State;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
+import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.ActivitiesManager;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
@@ -28,6 +30,7 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
     GridViewHelper gridView;
 
     private static CureIntakeActivity instance;
+    private static View view;
     public static CureIntakeActivity getInstance(){
         return instance;
     }
@@ -51,6 +54,18 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
     }
 
+    public CureIntakeActivity(){}
+
+    public <T extends View.OnClickListener> CureIntakeActivity(T activity, View view){
+        instance = this;
+        this.view = view;
+        gridView = new GridViewHelper(view, R.id.gvBase)
+                .setAdapter(new CellAdapter(view));
+        controls = new Controls();
+        ViewFactory.InitView(view, controls);
+        ActivityFactory.setListener(activity, controls);
+    }
+
 //    private View view;
 //    private void setLastView(View view){
 //        this.view = view;
@@ -68,24 +83,30 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
 //    }
 
     public static void refresh(){
-        instance.gridView.setAdapter(new CellAdapter(instance));
+        instance.gridView.setAdapter(new CellAdapter(view));
+        CureIntakeHistoryActivity.refresh();
     }
 
     @Override
     public void onClick(View view) {
+        this.view = view;
+        this.onClick(this, view);
+    }
+
+    public void onClick(Activity activity, View view) {
         ViewHelper v = new ViewHelper(view);
 
         //CSVController.writeTablesToSD();
 
-        if(v.idEquals(controls.edit_Button))
-            ActivitiesManager.startCureHistoryActivity(this);
+        if(v.idEquals(controls.start_Button))
+            startIntakeImpl();
         else if(v.idEquals(controls.intake_Button))
             this.intakeImpl(IntakeStatus.INTAKED);
         else if(v.idEquals(controls.cancel_Button))
             this.intakeImpl(IntakeStatus.CANCELED);
         else if(v.idEquals(controls.add_Button)) {
             EditIntakeActivity.state = State.ADD;
-            ActivitiesManager.startEditIntakeActivity(this);
+            ActivitiesManager.startEditIntakeActivity(activity);
         }
         else if(v.idEquals(controls.del_Button)){
             if(!isSelected())
@@ -95,6 +116,30 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
             DBHelper.getInstance().deleteRecord(model);
             refresh();
         }
+    }
+
+    private void startIntakeImpl(){
+        DBHelper db = DBHelper.getInstance();
+        Date lastDate = new Date();
+
+        HistoryRecordModel history = new HistoryRecordModel();
+        SchemeModel scheme = new SchemeModel();
+
+        history.id = getSelectedId();
+        history = db.getRecord(history);
+
+        scheme.id = history.schemeId;
+        scheme = db.getRecord(scheme);
+
+        history.intakeTime = lastDate;
+        history.intakeNum = 1;
+        history.daysRemaind = scheme.duration;
+
+        db.insertRecord(history);
+
+        scheme.lastDate = lastDate;
+        db.editRecord(scheme);
+        refresh();
     }
 
     private void intakeImpl(int status){
@@ -118,7 +163,8 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
             history.daysRemaind -= 1;
         }
         history.status = status;
-        db.editRecord(history);
+        //db.editRecord(history);
+        db.insertRecord(history);
 
         scheme.lastDate = lastDate;
         db.editRecord(scheme);
@@ -137,7 +183,7 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
         try {
             getSelectedId();
         }catch(Exception e){
-            Show.show(this, "Запись не выбрана");
+            Show.show(view.getContext(), "Запись не выбрана");
             return false;
         }
         return true;
