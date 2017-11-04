@@ -69,5 +69,7 @@ public class GridViewHelper {
         return this.cellHelper.getView();
     }
 
-
+    public Object getSelectedObject(){
+        return this.gridView.getSelectedItem();
+    }
 }

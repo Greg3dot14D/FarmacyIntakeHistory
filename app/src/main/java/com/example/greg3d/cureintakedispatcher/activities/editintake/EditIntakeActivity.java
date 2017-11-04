@@ -11,7 +11,6 @@ import com.example.greg3d.cureintakedispatcher.activities.editintake.adapters.Sp
 import com.example.greg3d.cureintakedispatcher.activities.editintake.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.constants.State;
-import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
@@ -41,7 +40,7 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
         return this.controls;
     }
 
-    private static HistoryRecordModel model;
+    private static SchemeModel model;
     public static int state;
 
     private Spinner spinner;
@@ -61,6 +60,7 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
         // Вызываем адаптер
         ActivityFactory.InitActivity(this, controls);
         ActivityFactory.setListener(this, controls);
+        updateFieldsBySelectedRecord();
     }
 
     @Override
@@ -95,11 +95,55 @@ public class EditIntakeActivity extends Activity implements View.OnClickListener
 
                 this.finish();
                 CureIntakeActivity.refresh();
+            } else if(state == State.EDIT && model != null){
+                DBHelper db = DBHelper.getInstance();
+
+                Date lastDate = new Date();
+                SchemeModel scheme = new SchemeModel();
+                scheme.id = CureIntakeActivity.getSelectedSchemeId();
+                scheme.lastDate = lastDate;
+                scheme.name = controls.schema_EditText.getText().toString();
+                scheme.duration = Integer.valueOf(controls.duration_EditText.getText().toString());
+                // TODO
+                scheme.intake_count = Integer.valueOf(controls.intakeNum_EditText.getText().toString());
+                scheme.farmacyId = ((FarmacyModel)spinner.getSelectedItem()).id;
+
+                db.editRecord(scheme);
+
+                HistoryRecordModel intakeModel = new HistoryRecordModel();
+                intakeModel.id = CureIntakeActivity.getSelectedId();
+                intakeModel.schemeId = scheme.id;
+                intakeModel.status = IntakeStatus.NEW;
+                //intakeModel.intakeNum = 0;
+                intakeModel.intakeTime = lastDate;
+                intakeModel.daysRemaind = Integer.valueOf(controls.duration_EditText.getText().toString());
+
+                db.editRecord(intakeModel);
+
+                this.finish();
+                CureIntakeActivity.refresh();
             }
             return;
         }
         else if(v.idEquals(controls.cancel_Button)) {
             this.finish();
+        }
+    }
+
+    public static void setModel(SchemeModel inModel){
+        model = inModel;
+    }
+
+    // Заполняем поля на форме по значениям выбранной записи
+    private void updateFieldsBySelectedRecord(){
+        if(this.model != null){
+            if(state == State.EDIT) {
+                controls.schema_EditText.setText(model.name);
+                controls.duration_EditText.setText(model.duration.toString());
+                controls.intakeNum_EditText.setText(model.intake_count.toString());
+                //controls.name_EditText.setText(model.name);
+                //controls.volume_EditText.setText(model.volume);
+            }
         }
     }
 }

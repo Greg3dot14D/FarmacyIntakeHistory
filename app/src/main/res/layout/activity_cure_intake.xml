@@ -10,11 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.79"
-        android:layout_marginTop="54px"
-        android:layout_marginBottom="5px"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:id="@+id/g_TL_Base">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/b_Title"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="Принял пилюльки по схеме ?"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+        </TableRow>
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,16 +57,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.04"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:text="Start" />
+        <Button
+            android:id="@+id/b_edit_intake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="Edit" />
         <Button
             android:id="@+id/b_del_intake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.04"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:text="-" />
     </TableRow>
     <TableRow
@@ -66,8 +88,8 @@
             android:id="@+id/b_intake_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="0.04"
             android:text="Принять" />
 
@@ -76,8 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.04"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:text="Отменить" />
     </TableRow>
 </LinearLayout>

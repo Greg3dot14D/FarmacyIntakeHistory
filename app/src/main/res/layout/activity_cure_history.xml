@@ -8,11 +8,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.79"
-        android:layout_marginTop="54px"
         android:layout_marginBottom="5px"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:id="@+id/g_TL_CureHistory">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/ch_Title"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Купил пилюльки ?"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+        </TableRow>
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,11 +21,12 @@ import com.example.greg3d.cureintakedispatcher.helpers.ActivitiesManager;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.GridViewHelper;
 import com.example.greg3d.cureintakedispatcher.model.HistoryRecordModel;
+import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
 import com.example.greg3d.cureintakedispatcher.model.SchemeModel;
 
 import java.util.Date;
 
-public class CureIntakeActivity extends Activity implements View.OnClickListener{
+public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity implements View.OnClickListener{
 
     private static final String LOG = "CureIntakeActivity";
     GridViewHelper gridView;
@@ -83,6 +85,7 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
 //    }
 
     public static void refresh(){
+
         instance.gridView.setAdapter(new CellAdapter(view));
         CureIntakeHistoryActivity.refresh();
     }
@@ -100,13 +103,20 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
 
         if(v.idEquals(controls.start_Button))
             startIntakeImpl();
-        else if(v.idEquals(controls.intake_Button))
+        else if(v.idEquals(controls.intake_Button) && isSelected())
             this.intakeImpl(IntakeStatus.INTAKED);
         else if(v.idEquals(controls.cancel_Button))
             this.intakeImpl(IntakeStatus.CANCELED);
         else if(v.idEquals(controls.add_Button)) {
             EditIntakeActivity.state = State.ADD;
             ActivitiesManager.startEditIntakeActivity(activity);
+        }
+        else if(v.idEquals(controls.edit_Button) && isSelected()) {
+            EditIntakeActivity.state = State.EDIT;
+            ActivitiesManager.startEditIntakeActivity(activity);
+            EditIntakeActivity
+                    .setModel(DBHelper.getRecordById(new SchemeModel(),
+                            getSelectedSchemeId()));
         }
         else if(v.idEquals(controls.del_Button)){
             if(!isSelected())
@@ -161,6 +171,8 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
         if(history.intakeNum > scheme.intake_count){
             history.intakeNum = 1;
             history.daysRemaind -= 1;
+            if(history.daysRemaind < 1)
+                history.daysRemaind = scheme.duration;
         }
         history.status = status;
         //db.editRecord(history);
@@ -172,16 +184,19 @@ public class CureIntakeActivity extends Activity implements View.OnClickListener
     }
 
     public static int getSelectedId(){
+        //return ((LastIntakeRecord)instance.gridView.getSelectedObject()).id;
         return Integer.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.c_id)).getText().toString());
     }
 
     public static int getSelectedSchemeId(){
+        //return ((LastIntakeRecord)instance.gridView.getSelectedObject()).schemeId;
         return Integer.valueOf(((TextView)instance.gridView.getView().findViewById(R.id.c_schemeId)).getText().toString());
     }
 
     private boolean isSelected(){
         try {
-            getSelectedId();
+            //int o = ((LastIntakeRecord)instance.gridView.getSelectedObject()).id;
+            Log.d("LLL", "" + getSelectedId());
         }catch(Exception e){
             Show.show(view.getContext(), "Запись не выбрана");
             return false;

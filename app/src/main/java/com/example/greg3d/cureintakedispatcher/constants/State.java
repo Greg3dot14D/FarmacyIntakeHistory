@@ -8,4 +8,5 @@ public abstract class State {
     public static final int BUY = 1;
     public static final int EDIT = 2;
     public static final int ADD = 3;
+    public static final int UNDEFINED = 0;
 }

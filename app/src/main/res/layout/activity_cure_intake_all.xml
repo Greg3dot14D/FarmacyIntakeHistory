@@ -10,11 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.79"
-        android:layout_marginTop="54px"
         android:layout_marginBottom="5px"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:id="@+id/g_TL_IntakeAll">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/ia_Title"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="История приема пилюлек"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+        </TableRow>
         <GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +38,7 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="25px"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
