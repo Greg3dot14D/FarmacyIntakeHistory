@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
+import com.example.greg3d.cureintakedispatcher.helpers.Tools;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
@@ -43,7 +44,7 @@ public class DBController {
                 " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
 //                " and S.DELETED = 0 " +
                 " and H.STATUS < 2 " +
-                " ORDER BY H.ID DESC";
+                " ORDER BY H.LAST_DATE DESC";
         return getIntakeRecords(query);
     }
 
@@ -52,7 +53,7 @@ public class DBController {
                 " SELECT * FROM [FARMACY_HISTORY_TABLE] FH " +
                 " WHERE DELETED = 0 " +
                 //" ORDER BY LAST_DATE DESC";
-                " ORDER BY ID DESC";
+                " ORDER BY LAST_DATE DESC";
         return DBHelper.getRecords(FarmacyHistoryModel.class, query);
     }
 
@@ -113,9 +114,8 @@ public class DBController {
                 status = "Новая    ";
                 break;
         }
-        record.lastIntake = String.format("%s %s",
-                status,
-                cursor.getString(cursor.getColumnIndex("ACTION_DATE")));
+        record.lastIntakeStatus = status;
+        record.lastIntakeDate = Tools.longToDate(cursor.getLong(cursor.getColumnIndex("ACTION_DATE")));
         record.currentIntake = String.format("Номер приема %s из %s",
                 cursor.getString(cursor.getColumnIndex("INTAKE_ID_DAYE_NUM")),
                 cursor.getString(cursor.getColumnIndex("D_COUNT"))

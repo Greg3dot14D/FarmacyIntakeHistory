@@ -47,7 +47,8 @@ public class BaseModel {
             if(type.equals(Integer.class))
                 f.set(this, Integer.valueOf(o.toString()));
             else if(type.equals(Date.class))
-                f.set(this, Tools.stringToDateTime(o.toString()));
+                // TODO - long to Date
+                f.set(this, Tools.longToDate(Long.valueOf(o.toString())));
             else if(type.equals(Double.class))
                 f.set(this, Double.valueOf(o.toString()));
             else

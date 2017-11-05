@@ -2,7 +2,6 @@ package com.example.greg3d.cureintakedispatcher.activities.cureedit.commands;
 
 import com.example.greg3d.cureintakedispatcher.activities.cureedit.CureEditActivity;
 import com.example.greg3d.cureintakedispatcher.commands.IDateCommand;
-import com.example.greg3d.cureintakedispatcher.helpers.Tools;
 
 import java.util.Calendar;
 
@@ -13,6 +12,6 @@ import java.util.Calendar;
 public class AddBuyDateCommand implements IDateCommand{
     @Override
     public void execute(Calendar calendar) {
-        CureEditActivity.getInstance().getControls().buyDate_EditText.setText(Tools.dateToString(calendar.getTime()));
+        CureEditActivity.getControls().buyDate_DateText.setDate(calendar.getTime());
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.controls.LastIntakeView;
 import com.example.greg3d.cureintakedispatcher.controller.DBController;
-import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
+import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
 
 /**
@@ -37,14 +37,15 @@ public class CellAdapter extends ArrayAdapter<LastIntakeRecord>
 
     public static View getView(View convertView, LastIntakeRecord cell){
         LastIntakeView controls = new LastIntakeView();
-        ViewFactory.InitView(convertView, controls);
+        ActivityFactory.InitActivity(convertView, controls);
 
-        controls.id_TextView.setText(String.valueOf(cell.id));
-        controls.schemeId_TextView.setText(String.valueOf(cell.schemeId));
+        controls.id_IntegerView.setValue(cell.id);
+        controls.schemeId_IntegerView.setValue(cell.schemeId);
         controls.scheme_TextView.setText(cell.schemeName);
         controls.currentIntake_TextView.setText(cell.currentIntake);
-        controls.intakeDate_TextView.setText(cell.lastIntake);
-        controls.balanceDays_TextView.setText(String.valueOf(cell.daysRemaind));
+        controls.intakeStatus_TextView.setText(cell.lastIntakeStatus);
+        controls.intakeDate_TextView.setDate(cell.lastIntakeDate);
+        controls.balanceDays_IntegerView.setValue(cell.daysRemaind);
 
         return convertView;
     }

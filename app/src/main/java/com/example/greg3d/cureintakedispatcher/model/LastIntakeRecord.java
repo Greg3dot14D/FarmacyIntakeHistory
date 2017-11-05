@@ -26,7 +26,10 @@ public class LastIntakeRecord extends BaseModel{
     public String currentIntake;
 
     @Name("Последний прием")
-    public String lastIntake;
+    public String lastIntakeStatus;
+
+    @Name("Последний прием")
+    public Date lastIntakeDate;
 
     @Name("Осталось дней")
     public String daysRemaind;

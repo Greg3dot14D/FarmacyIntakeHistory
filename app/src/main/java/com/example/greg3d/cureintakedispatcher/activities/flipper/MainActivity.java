@@ -2,9 +2,7 @@ package com.example.greg3d.cureintakedispatcher.activities.flipper;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -66,23 +64,8 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(viewPager);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-        drawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.drawer_layout);
-
-        if(drawerFragment != null)
-            Log.d("LLL", "not null");
-        else
-            Log.d("LLL", "is null");
-
-        // Set up the drawer.
-//        drawerFragment.setUp(
-//                R.id.navigation_drawer,
-//                (DrawerLayout) findViewById(R.id.drawer_layout));
-        DrawerLayout draverView = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //drawerFragment.setUp(R.id.navigation_drawer, draverView);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
     }
 
     @Override

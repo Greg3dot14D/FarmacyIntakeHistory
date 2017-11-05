@@ -3,6 +3,10 @@ package com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.co
 import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
+import com.example.greg3d.cureintakedispatcher.constants.DateFormats;
+import com.example.greg3d.cureintakedispatcher.elements.FormatedDateView;
+import com.example.greg3d.cureintakedispatcher.elements.IntegerView;
+import com.example.greg3d.cureintakedispatcher.framework.annotations.DateFormated;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
 
 /**
@@ -11,10 +15,10 @@ import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
 
 public class LastIntakeView {
         @FindBy(R.id.c_id)
-        public TextView id_TextView;
+        public IntegerView id_IntegerView;
 
         @FindBy(R.id.c_schemeId)
-        public TextView schemeId_TextView;
+        public IntegerView schemeId_IntegerView;
 
         @FindBy(R.id.c_Scheme)
         public TextView scheme_TextView;
@@ -22,9 +26,15 @@ public class LastIntakeView {
         @FindBy(R.id.c_CurrentIntake)
         public TextView currentIntake_TextView;
 
+        @FindBy(R.id.c_IntakeStatus)
+        public TextView intakeStatus_TextView;
+
         @FindBy(R.id.c_IntakeDate)
-        public TextView intakeDate_TextView;
+        @DateFormated(DateFormats.SIMPLE_DATE_TIME_FORMAT)
+        // TODO - Date to Long
+        //public TextView intakeDate_TextView;
+        public FormatedDateView intakeDate_TextView;
 
         @FindBy(R.id.c_BalanceDays)
-        public TextView balanceDays_TextView;
+        public IntegerView balanceDays_IntegerView;
 }

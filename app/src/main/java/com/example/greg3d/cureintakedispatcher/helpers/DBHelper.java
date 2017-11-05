@@ -165,7 +165,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     else if (type.equals(String.class))
                         result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), f.get(model).toString());
                     else if (type.equals(Date.class))
-                        result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), Tools.dateTimeToString((Date)f.get(model)));
+                    // TODO - Date to long
+                    //    result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), Tools.dateTimeToString((Date)f.get(model)));
+                        result += String.format(",[%s] = %s", f.getAnnotation(Name.class).value(), ((Date)f.get(model)).getTime());
                     else
                         result += String.format(",[%s] = %s", f.getAnnotation(Name.class).value(), f.get(model));
                 }catch(IllegalAccessException e){
@@ -205,7 +207,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             else if (type.equals(String.class))
                                 result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), value.toString());
                             else if (type.equals(Date.class))
-                                result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), Tools.dateTimeToString((Date) value));
+                                // TODO - Date to long
+                                //result += String.format(",[%s] = '%s'", f.getAnnotation(Name.class).value(), Tools.dateTimeToString((Date) value));
+                                result += String.format(",[%s] = %s", f.getAnnotation(Name.class).value(), ((Date) value).getTime());
                             else
                                 result += String.format(",[%s] = %s", f.getAnnotation(Name.class).value(), value);
                         }
@@ -226,11 +230,15 @@ public class DBHelper extends SQLiteOpenHelper {
             if(f.isAnnotationPresent(Name.class))
             if(!"ID".equals(f.getAnnotation(Name.class).value())) {
                 Class<?> type = f.getType();
-                if (type.equals(String.class) || type.equals(Date.class))
+                // TODO - Date to long
+                //if (type.equals(String.class) || type.equals(Date.class))
+                if (type.equals(String.class))
                     result += String.format(", [%s] TEXT", f.getAnnotation(Name.class).value());
                 if (type.equals(Double.class))
                     result += String.format(", [%s] REAL DEFAULT 0.0", f.getAnnotation(Name.class).value());
-                if (type.equals(Integer.class) || type.equals(Long.class))
+                // TODO - Date to long
+                //if (type.equals(Integer.class) || type.equals(Long.class))
+                if (type.equals(Integer.class) || type.equals(Long.class) || type.equals(Date.class))
                     result += String.format(", [%s] integer", f.getAnnotation(Name.class).value());
             }
         }
@@ -255,7 +263,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     if (type.equals(String.class))
                         values += String.format(",'%s'", f.get(model).toString());
                     else if (type.equals(Date.class))
-                        values += String.format(",'%s'", Tools.dateTimeToString((Date)f.get(model)));
+                        // TODO - Date to long
+                        //values += String.format(",'%s'", Tools.dateTimeToString((Date)f.get(model)));
+                        values += String.format(",%s", ((Date)f.get(model)).getTime());
                     else
                         values += String.format(",%s", f.get(model));
                 }catch(IllegalAccessException e){

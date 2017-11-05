@@ -10,6 +10,6 @@ import com.example.greg3d.cureintakedispatcher.commands.IObjectCommand;
 public class AddPriceCommand implements IObjectCommand{
     @Override
     public void execute(Object object) {
-        CureEditActivity.getInstance().getControls().price_EditText.setText(object.toString());
+        CureEditActivity.getControls().price_EditText.setValue(object);
     }
 }

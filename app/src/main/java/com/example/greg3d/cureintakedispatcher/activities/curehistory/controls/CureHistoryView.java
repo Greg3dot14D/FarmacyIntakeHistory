@@ -3,6 +3,10 @@ package com.example.greg3d.cureintakedispatcher.activities.curehistory.controls;
 import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
+import com.example.greg3d.cureintakedispatcher.constants.DateFormats;
+import com.example.greg3d.cureintakedispatcher.elements.FormatedDateView;
+import com.example.greg3d.cureintakedispatcher.elements.IntegerView;
+import com.example.greg3d.cureintakedispatcher.framework.annotations.DateFormated;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
 
 /**
@@ -11,10 +15,10 @@ import com.example.greg3d.cureintakedispatcher.framework.annotations.FindBy;
 
 public class CureHistoryView {
         @FindBy(R.id.ch_id)
-        public TextView id_TextView;
+        public IntegerView id_TextView;
 
         @FindBy(R.id.ch_farmacyId)
-        public TextView farmacyId_TextView;
+        public IntegerView farmacyId_TextView;
 
         @FindBy(R.id.ch_CureName)
         public TextView cureName_TextView;
@@ -26,5 +30,6 @@ public class CureHistoryView {
         public TextView curePrice_TextView;
 
         @FindBy(R.id.ch_PurchaseDate)
-        public TextView purchaseDate_TextView;
+        @DateFormated(DateFormats.DATE_FORMAT)
+        public FormatedDateView purchaseDate_TextView;
 }

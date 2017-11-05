@@ -9,8 +9,7 @@ import android.widget.ArrayAdapter;
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.curehistory.controls.CureHistoryView;
 import com.example.greg3d.cureintakedispatcher.controller.DBController;
-import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
-import com.example.greg3d.cureintakedispatcher.helpers.Tools;
+import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 
 import java.util.List;
@@ -41,14 +40,15 @@ public class CellAdapter extends ArrayAdapter<FarmacyHistoryModel>
     public static View getView(View convertView, FarmacyHistoryModel cell) {
 
         CureHistoryView controls = new CureHistoryView();
-        ViewFactory.InitView(convertView, controls);
 
-        controls.id_TextView.setText(String.valueOf(cell.id));
-        controls.farmacyId_TextView.setText(String.valueOf(cell.farmacyId));
+        ActivityFactory.InitActivity(convertView, controls);
+
+        controls.id_TextView.setValue(cell.id);
+        controls.farmacyId_TextView.setValue(cell.farmacyId);
         controls.cureName_TextView.setText(cell.name);
         controls.cureValume_TextView.setText(String.format("Объем %s",cell.volume));
         controls.curePrice_TextView.setText(String.format("Цена %s руб",cell.price));
-        controls.purchaseDate_TextView.setText(String.format("Дата покупки %s",Tools.dateToString(cell.purchaseDate)));
+        controls.purchaseDate_TextView.setDate(cell.purchaseDate);
 
         return convertView;
     }

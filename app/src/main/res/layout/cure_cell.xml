@@ -28,15 +28,29 @@
         android:text="Аспирин"
         android:textSize="20dp">
     </TextView>
-    <TextView
-        android:id="@+id/ch_PurchaseDate"
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:textStyle="bold"
-        android:text="Дата покупки 01/02/17"
-        android:textSize="20dp">
-    </TextView>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ch_PurchaseLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:textStyle="italic"
+            android:text="Дата покупки"
+            android:textSize="20dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/ch_PurchaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:textStyle="bold|italic"
+            android:text="01/02/17"
+            android:textSize="20dp">
+        </TextView>
+    </TableRow>>
     <TextView
         android:id="@+id/ch_Valume"
         android:layout_width="wrap_content"

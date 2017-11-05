@@ -2,6 +2,7 @@ package com.example.greg3d.cureintakedispatcher.activities.cureedit;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.greg3d.cureintakedispatcher.R;
@@ -12,11 +13,8 @@ import com.example.greg3d.cureintakedispatcher.activities.curehistory.CureHistor
 import com.example.greg3d.cureintakedispatcher.constants.State;
 import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
 import com.example.greg3d.cureintakedispatcher.dialog.calc.CalcDialog;
-import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
-import com.example.greg3d.cureintakedispatcher.helpers.Tools;
-import com.example.greg3d.cureintakedispatcher.model.DateFormat;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyModel;
 
@@ -37,7 +35,7 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     }
 
     private Controls controls;
-    public Controls getControls(){return this.controls;}
+    public static Controls getControls(){return instance.controls;}
 
     private static FarmacyHistoryModel model;
     public static int state;
@@ -48,16 +46,15 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_cure_edit);
 
         instance = this;
-        controls = new Controls();
+        controls = new Controls(this);
 
 //        Spinner spinner = (Spinner)findViewById(R.id.ce_Cure_Spinner);
 //        spinner.setAdapter(new SpinnerAdapter(this));
 //        spinner.setSelection(1, true);
 
         // Вызываем адаптер
-        ActivityFactory.InitActivity(this, controls);
-        ActivityFactory.setListener(this, controls);
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
+        //controls.buyDate_DateText.setView(controls.buyDate_EditText);
 
         this.updateFieldsBySelectedRecord();
     }
@@ -77,15 +74,18 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         ViewHelper v = new ViewHelper(view);
 
-        if(v.idEquals(controls.buyDate_EditText))
+        if(v.idEquals(controls.buyDate_DateText.getView()))
             new DatePickerDialogImpl(this, Calendar.getInstance().getTime(), new AddBuyDateCommand()).show();
         else if(v.idEquals(controls.save_Button)) {
             FarmacyHistoryModel fhModel = new FarmacyHistoryModel();
 
             fhModel.name = controls.name_EditText.getText().toString();
-            fhModel.price = Double.valueOf(controls.price_EditText.getText().toString());
+            fhModel.price = controls.price_EditText.getValue();
             fhModel.volume = controls.volume_EditText.getText().toString();
-            fhModel.purchaseDate = Tools.stringToDate(controls.buyDate_EditText.getText().toString(), DateFormat.DATE);
+            fhModel.purchaseDate = controls.buyDate_DateText.getDate();
+
+            Log.d("LLL", "--->" + fhModel.purchaseDate);
+
             updateRecord(fhModel);
 
             CureHistoryActivity.refresh();
@@ -93,7 +93,6 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
         }
         else if(v.idEquals(controls.cancel_Button))
             this.finish();
-            //Show.show(this, String.valueOf(CureHistoryAllActivity.getSelectedId()));
         else if(v.idEquals(controls.price_EditText)){
             CalcDialog.show (this, new AddPriceCommand());
         }
@@ -103,10 +102,10 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     private void updateFieldsBySelectedRecord(){
         if(this.model != null){
             if(state == State.BUY)
-                controls.buyDate_EditText.setText(Tools.dateToString(new Date()));
+                controls.buyDate_DateText.setDate(new Date());
             else
-                controls.buyDate_EditText.setText(Tools.dateToString(model.purchaseDate));
-            controls.price_EditText.setText(model.price.toString());
+                controls.buyDate_DateText.setDate(model.purchaseDate);
+            controls.price_EditText.setValue(model.price);
             controls.name_EditText.setText(model.name);
             controls.volume_EditText.setText(model.volume);
         }

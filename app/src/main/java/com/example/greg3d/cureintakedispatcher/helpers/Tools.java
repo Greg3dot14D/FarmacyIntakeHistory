@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.example.greg3d.cureintakedispatcher.constants.DateFormats;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,13 +17,14 @@ import java.util.Date;
  */
 public class Tools {
 
-    //private static String getDateFormat = "dd.MM.yyyy";
-    private static String getDateFormat = "dd.MM.yyyy";
-    private static String getTimeFormat = "HH:mm:ss";
-    private static String getDateTimeFormat = "HH:mm:ss yyyy-MM-dd";
-
     public static Date stringToDateTime(String aDate) {
-        return stringToDate(aDate,getDateTimeFormat);
+        return stringToDate(aDate, DateFormats.DATE_TIME_FORMAT);
+    }
+
+    public static Date longToDate(long value){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(value);
+        return calendar.getTime();
     }
 
     public static Date stringToDate(String aDate,String aFormat) {
@@ -41,15 +44,15 @@ public class Tools {
     }
 
     public static String dateTimeToString(Date date){
-        return dateTimeToString(date, getDateTimeFormat);
+        return dateTimeToString(date, DateFormats.DATE_FORMAT);
     }
 
     public static String dateToString(Date date){
-        return dateTimeToString(date, getDateFormat);
+        return dateTimeToString(date, DateFormats.DATE_FORMAT);
     }
 
     public static String getTimeToString(Date date){
-        return dateTimeToString(date, getTimeFormat);
+        return dateTimeToString(date, DateFormats.TIME_FORMAT);
     }
 
     public static String dateTimeToString(Date date, String dateFormat){

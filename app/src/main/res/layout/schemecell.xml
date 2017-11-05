@@ -3,56 +3,72 @@
     android:orientation="vertical"
     android:background="@drawable/cell_rectangle"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="120dp">
 
-    >
-    <TextView
-        android:id="@+id/c_id"
+    <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="0dp">
-    </TextView>
-    <TextView
-        android:id="@+id/c_schemeId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="0dp">
-    </TextView>
-    <TextView
-        android:id="@+id/c_Scheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="11dp"
-        android:textStyle="bold"
-        android:text="Аспирин 3 раза/день по 2 таблетки"
-        android:textSize="20dp">
-    </TextView>
-    <TextView
-        android:id="@+id/c_IntakeDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:textStyle="italic"
-        android:text="Прянял в 10:10:00  01/02/17"
-        android:textSize="20dp">
-    </TextView>
-    <TextView
-        android:id="@+id/c_CurrentIntake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:textStyle="italic"
-        android:text="Номер приема 2 из 3"
-        android:textSize="20dp">
-    </TextView>
-    <TextView
-        android:id="@+id/c_BalanceDays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:textStyle="italic"
-        android:text="Осталось дней 7"
-        android:textSize="20dp">
-    </TextView>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/c_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="0dp">
+        </TextView>
+        <TextView
+            android:id="@+id/c_schemeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="0dp">
+        </TextView>
+        <TextView
+            android:id="@+id/c_Scheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="11dp"
+            android:textStyle="bold"
+            android:text="Аспирин 3 раза/день по 2 таблетки"
+            android:textSize="20dp">
+        </TextView>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/c_IntakeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:layout_marginLeft="11dp"
+                android:textStyle="italic"
+                android:text="Прянял"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/c_IntakeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="11dp"
+                android:textStyle="bold|italic"
+                android:text="10:10 01.02.17"
+                android:textSize="20dp"/>
+        </TableRow>
+        <TextView
+            android:id="@+id/c_CurrentIntake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:textStyle="italic"
+            android:text="Номер приема 2 из 3"
+            android:textSize="20dp">
+        </TextView>
+        <TextView
+            android:id="@+id/c_BalanceDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:textStyle="italic"
+            android:text="Осталось дней 7"
+            android:textSize="20dp">
+        </TextView>
+    </TableLayout>
 </LinearLayout>
