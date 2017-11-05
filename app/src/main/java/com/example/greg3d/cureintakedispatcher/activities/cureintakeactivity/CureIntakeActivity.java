@@ -68,24 +68,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
         ActivityFactory.setListener(activity, controls);
     }
 
-//    private View view;
-//    private void setLastView(View view){
-//        this.view = view;
-//    }
-//
-//    private void resetSelect(){
-//        if(this.view == null)
-//            return;
-//        this.view.setBackgroundColor(Colors.DEFAULT_CELL_COLOR);
-//    }
-//
-//    private void setSelect(View view){
-//        this.view = view;
-//        this.view.setBackgroundColor(Colors.SELECTED_CELL_COLOR);
-//    }
-
     public static void refresh(){
-
         instance.gridView.setAdapter(new CellAdapter(view));
         CureIntakeHistoryActivity.refresh();
     }
@@ -98,8 +81,6 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
 
     public void onClick(Activity activity, View view) {
         ViewHelper v = new ViewHelper(view);
-
-        //CSVController.writeTablesToSD();
 
         if(v.idEquals(controls.start_Button))
             startIntakeImpl();
@@ -143,6 +124,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
 
         history.intakeTime = lastDate;
         history.intakeNum = 1;
+        history.status = IntakeStatus.INTAKED;
         history.daysRemaind = scheme.duration;
 
         db.insertRecord(history);

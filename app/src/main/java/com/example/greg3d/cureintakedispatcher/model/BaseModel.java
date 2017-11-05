@@ -1,5 +1,7 @@
 package com.example.greg3d.cureintakedispatcher.model;
 
+import android.util.Log;
+
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.helpers.Tools;
 
@@ -44,6 +46,7 @@ public class BaseModel {
         Field f = this.getFieldByName(fieldName);
         Class<?> type = f.getType();
         try {
+            Log.d("r->", "" + f.getName());
             if(type.equals(Integer.class))
                 f.set(this, Integer.valueOf(o.toString()));
             else if(type.equals(Date.class))

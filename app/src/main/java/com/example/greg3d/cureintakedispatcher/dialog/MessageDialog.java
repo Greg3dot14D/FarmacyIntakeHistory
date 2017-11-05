@@ -9,18 +9,15 @@ import android.content.DialogInterface;
  */
 public class MessageDialog {
 
-    public MessageDialog(final Activity activity){
+    public MessageDialog(final Activity activity, String title, String message){
         AlertDialog.Builder ad = new AlertDialog.Builder(activity);
-        ad.setTitle("Эбаот");  // заголовок
-        //ad.setMessage("Изменить выбранную запись ?"); // сообщение
-        ad.setMessage("Visit time dispatcher\nfor SBT lusers\n\nwriten by Greg3D 07.02.2017"); // сообщение
+        ad.setTitle(title);  // заголовок
+        ad.setMessage(message); // сообщение
         ad.setIcon(android.R.drawable.ic_dialog_alert);
         ad.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-
             }
         });
-
         ad.show();
     }
 }

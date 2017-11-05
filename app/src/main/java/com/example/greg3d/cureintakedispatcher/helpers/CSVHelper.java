@@ -213,7 +213,9 @@ public class CSVHelper {
                 if(o == null)
                     value = "";
                 else if (f.getType().equals(Date.class))
-                    value = Tools.dateTimeToString((Date)f.get(model));
+                    // TODO - Date to Long
+                    //value = Tools.dateTimeToString((Date)f.get(model));
+                    value = String.valueOf(((Date)f.get(model)).getTime());
                 else
                     value = f.get(model).toString();
                 sb.append("\t").append(value).append(";");
