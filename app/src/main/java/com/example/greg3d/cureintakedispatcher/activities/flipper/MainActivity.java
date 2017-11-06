@@ -18,6 +18,7 @@ import com.example.greg3d.cureintakedispatcher.activities.curehistoryall.CureHis
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.CureIntakeActivity;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.CureIntakeHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.activities.flipper.adapters.SamplePagerAdapter;
+import com.example.greg3d.cureintakedispatcher.activities.flipper.commands.ExportFilesCommand;
 import com.example.greg3d.cureintakedispatcher.activities.flipper.commands.ImportFilesCommand;
 import com.example.greg3d.cureintakedispatcher.constants.Settings;
 import com.example.greg3d.cureintakedispatcher.dialog.MessageDialog;
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_import) {
             new YesNoDialog(this, new ImportFilesCommand(), "Выполнить инпорт из внешних файлов ?\nДанные в БД будут похерены !!!").show();
         } else if (id == R.id.nav_export) {
-            new YesNoDialog(this, new ImportFilesCommand(), String.format("Выполнить экспорт БД во внешние файлы ?\n фалы попадут в папку '%s'", Settings.EXTERNAL_FILES_DIRECTORY)).show();
+            new YesNoDialog(this, new ExportFilesCommand(), String.format("Выполнить экспорт БД во внешние файлы ?\n фалы попадут в папку '%s'", Settings.EXTERNAL_FILES_DIRECTORY)).show();
         } else if (id == R.id.nav_about) {
             new MessageDialog(this, "Эбаот", "Farmacy intake dispatcher\nWriten for Max Reziapkin\n\nBy Greg3D 06.11.2017");
         }

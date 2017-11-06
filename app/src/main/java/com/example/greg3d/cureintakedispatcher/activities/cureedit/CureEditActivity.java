@@ -44,18 +44,9 @@ public class CureEditActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cure_edit);
-
         instance = this;
         controls = new Controls(this);
-
-//        Spinner spinner = (Spinner)findViewById(R.id.ce_Cure_Spinner);
-//        spinner.setAdapter(new SpinnerAdapter(this));
-//        spinner.setSelection(1, true);
-
-        // Вызываем адаптер
-        //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
-        //controls.buyDate_DateText.setView(controls.buyDate_EditText);
-
+        controls.buyDate_DateText.setDate(new Date());
         this.updateFieldsBySelectedRecord();
     }
 

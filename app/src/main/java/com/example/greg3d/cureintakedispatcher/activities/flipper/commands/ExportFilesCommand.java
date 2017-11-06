@@ -7,7 +7,7 @@ import com.example.greg3d.cureintakedispatcher.controller.CSVController;
  * Created by greg3d on 06.11.17.
  */
 
-public class ExportFielsCommand implements ICommand{
+public class ExportFilesCommand implements ICommand{
     @Override
     public void execute() {
         CSVController.writeTablesToSD();

@@ -101,9 +101,7 @@ public class CureHistoryAllActivity extends Activity implements View.OnClickList
     }
 
     private boolean isSelected(){
-        try {
-            getSelectedFarmacyId();
-        }catch(Exception e){
+        if(!this.gridView.isSelected()) {
             Show.show(view.getContext(), "Запись не выбрана");
             return false;
         }
@@ -120,6 +118,7 @@ public class CureHistoryAllActivity extends Activity implements View.OnClickList
 
     public static void refresh(){
         instance.gridView.setAdapter(new CellAdapter(instance.view.getContext(), getfilteredByMonthRecords(instance.getFilter())));
+        instance.gridView.setUnSelected();
     }
 
     public static List<FarmacyHistoryModel> getfilteredByMonthRecords(Date date){
@@ -129,10 +128,6 @@ public class CureHistoryAllActivity extends Activity implements View.OnClickList
         Date startDate = calendar.getTime();
         calendar.add(Calendar.MONTH, 1);
         Date endDate = calendar.getTime();
-
-        Log.d("DDD", "start" + startDate);
-        Log.d("DDD", "end" + endDate);
-
         return DBController.getFarmacyHistoryRecordsByDate(startDate, endDate);
     }
 

@@ -2,7 +2,6 @@ package com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -76,6 +75,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
     public static void refresh(){
         instance.gridView.setAdapter(new CellAdapter(view));
         CureIntakeHistoryActivity.refresh();
+        instance.gridView.setUnSelected();
     }
 
     @Override
@@ -87,13 +87,13 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
     public void onClick(Activity activity, View view) {
         ViewHelper v = new ViewHelper(view);
 
-        if(v.idEquals(controls.start_Button))
+        if(v.idEquals(controls.start_Button) && isSelected())
             //startIntakeImpl();
             new YesNoDialog(activity, new StartIntakeCommand(), "Начинаем курс по новой ?").show();
         else if(v.idEquals(controls.intake_Button) && isSelected())
             //this.intakeImpl(IntakeStatus.INTAKED);
             new YesNoDialog(activity, new ConfirmIntakeCommand(), "Принимаем пилюльку ?").show();
-        else if(v.idEquals(controls.cancel_Button))
+        else if(v.idEquals(controls.cancel_Button) && isSelected())
             //this.intakeImpl(IntakeStatus.CANCELED);
             new YesNoDialog(activity, new CancelIntakeCommand(), "Пропускаем пилюльку ?").show();
         else if(v.idEquals(controls.add_Button)) {
@@ -107,11 +107,8 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
                     .setModel(DBHelper.getRecordById(new SchemeModel(),
                             getSelectedSchemeId()));
         }
-        else if(v.idEquals(controls.del_Button)){
-            if(!isSelected())
-                return;
+        else if(v.idEquals(controls.del_Button) && isSelected())
             new YesNoDialog(activity, new DeleteIntakeCommand(), "Удаляем схемку ?").show();
-        }
     }
 
     private void startIntakeImpl(){
@@ -181,10 +178,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
     }
 
     private boolean isSelected(){
-        try {
-            //int o = ((LastIntakeRecord)instance.gridView.getSelectedObject()).id;
-            Log.d("LLL", "" + getSelectedId());
-        }catch(Exception e){
+        if(!this.gridView.isSelected()) {
             Show.show(view.getContext(), "Запись не выбрана");
             return false;
         }

@@ -9,7 +9,6 @@ import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.adapters.CellIntakeHistoryAllAdapter;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.commands.FilterByMonthCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.controls.Controls;
-import com.example.greg3d.cureintakedispatcher.controller.CSVController;
 import com.example.greg3d.cureintakedispatcher.controller.DBController;
 import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
@@ -83,8 +82,8 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
 
         if(v.idEquals(controls.filter_DateView))
             new DatePickerDialogImpl(activity, getFilter(), new FilterByMonthCommand()).show();
-        else if(v.idEquals(controls.add_Button))
-            CSVController.writeTablesToSD();
+//        else if(v.idEquals(controls.add_Button))
+//            CSVController.writeTablesToSD();
 
 //            startIntakeImpl();
 //        else if(v.idEquals(controls.intake_Button))
@@ -166,9 +165,7 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
     }
 
     private boolean isSelected(){
-        try {
-            getSelectedId();
-        }catch(Exception e){
+        if(!this.gridView.isSelected()) {
             Show.show(view.getContext(), "Запись не выбрана");
             return false;
         }
@@ -177,6 +174,7 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
 
     public static void refresh(){
         instance.gridView.setAdapter(new CellIntakeHistoryAllAdapter(view.getContext(), getfilteredByMonthRecords(instance.getFilter())));
+        instance.gridView.setUnSelected();
     }
 
     public static List<LastIntakeRecord> getfilteredByMonthRecords(Date date){

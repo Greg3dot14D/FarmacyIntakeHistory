@@ -14,6 +14,7 @@ public class GridViewHelper {
 
     private GridView gridView;
     private final CellHelper cellHelper = new CellHelper();
+    private boolean isSelected = false;
 
     public GridViewHelper(View view, int id){
         this.gridView = (GridView)view.findViewById(id);
@@ -52,6 +53,7 @@ public class GridViewHelper {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cellHelper.resetSelect();
                 cellHelper.setSelect(view, id);
+                setSelected();
             }
         });
     }
@@ -71,5 +73,20 @@ public class GridViewHelper {
 
     public Object getSelectedObject(){
         return this.gridView.getSelectedItem();
+    }
+
+    private void setSelected(){
+        //this.gridView.setSelected(true);
+        this.isSelected = true;
+    }
+
+    public void setUnSelected(){
+        //this.gridView.setSelected(false);
+        this.isSelected = false;
+    }
+
+    public boolean isSelected(){
+       //return this.gridView.isSelected();
+        return this.isSelected;
     }
 }

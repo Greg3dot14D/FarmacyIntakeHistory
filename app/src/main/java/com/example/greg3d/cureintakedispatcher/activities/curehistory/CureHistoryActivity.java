@@ -78,35 +78,26 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
             CureEditActivity.state = State.ADD;
             ActivitiesManager.startCureEditActivity(activity, 0);
         }
-        else if(v.idEquals(controls.buy_Button)) {
-            if(!isSelected())
-                return;
+        else if(v.idEquals(controls.buy_Button) && isSelected()) {
             CureEditActivity.state = State.BUY;
             CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
             ActivitiesManager.startCureEditActivity(activity,0);
         }
-        else if(v.idEquals(controls.edit_Button)) {
-            if(!isSelected())
-                return;
+        else if(v.idEquals(controls.edit_Button) && isSelected()) {
             CureEditActivity.state = State.EDIT;
             CureEditActivity
                     .setModel(DBHelper.getRecordById(new FarmacyHistoryModel(),
                             getSelectedId()));
             ActivitiesManager.startCureEditActivity(activity,0);
         }
-        else if(v.idEquals(controls.del_Button)) {
-            if (!isSelected())
-                return;
+        else if(v.idEquals(controls.del_Button) && isSelected())
             new YesNoDialog(activity, new DeleteCureCommand(), "Удаяем пилюльку ?").show();
-        }
     }
 
     private boolean isSelected(){
-        try {
-            getSelectedFarmacyId();
-        }catch(Exception e){
+        if(!this.gridView.isSelected()) {
             Show.show(view.getContext(), "Запись не выбрана");
             return false;
         }
@@ -124,5 +115,6 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
     public static void refresh(){
         instance.gridView.setAdapter(new CellAdapter(instance.view.getContext()));
         CureHistoryAllActivity.refresh();
+        instance.gridView.setUnSelected();
     }
 }

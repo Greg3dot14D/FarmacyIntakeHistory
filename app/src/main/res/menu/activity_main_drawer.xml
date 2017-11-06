@@ -4,13 +4,18 @@
         <item
             android:id="@+id/nav_import"
             android:title="Import from files"
-            >16dp</item>>
+            android:icon="@drawable/ic_action_sd"
+            />
         <item
             android:id="@+id/nav_export"
-            android:title="Export to files" />
+            android:title="Export to files"
+            android:icon="@drawable/ic_action_sd"
+            />
         <item
             android:id="@+id/nav_about"
-            android:title="Эбаут" />
+            android:title="Эбаот"
+            android:icon="@drawable/ic_action_about"
+            />
     </group>
 
     <!--<item android:title="Communicate">-->
