@@ -7,14 +7,22 @@ import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.adapters.CellIntakeHistoryAllAdapter;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.commands.FilterByMonthCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.controller.CSVController;
+import com.example.greg3d.cureintakedispatcher.controller.DBController;
+import com.example.greg3d.cureintakedispatcher.dialog.DatePickerDialogImpl;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
 import com.example.greg3d.cureintakedispatcher.framework.helpers.ViewHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 import com.example.greg3d.cureintakedispatcher.helpers.GridViewHelper;
+import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class CureIntakeHistoryActivity extends Activity implements View.OnClickListener{
 
@@ -37,12 +45,16 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
         instance = this;
         new DBHelper(this);
 
-        gridView = new GridViewHelper(this, R.id.gvIntakeAll)
-                            .setAdapter(new CellIntakeHistoryAllAdapter(this));
-
         controls = new Controls();
         ActivityFactory.InitActivity(this, controls);
         ActivityFactory.setListener(this, controls);
+
+        controls.filter_DateView.setDate(new Date());
+
+        gridView = new GridViewHelper(this, R.id.gvIntakeAll)
+                            .setAdapter(new CellIntakeHistoryAllAdapter(this, getfilteredByMonthRecords(new Date())));
+
+
         //ActivityFactory.InitFonts(this,controls, CssManager.getEditButtonCss());
     }
 
@@ -52,14 +64,12 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
         instance = this;
         this.view = view;
         gridView = new GridViewHelper(view, R.id.gvIntakeAll)
-                .setAdapter(new CellIntakeHistoryAllAdapter(view.getContext()));
+                .setAdapter(new CellIntakeHistoryAllAdapter(view.getContext(), getfilteredByMonthRecords(new Date())));
         controls = new Controls();
         ViewFactory.InitView(view, controls);
         ActivityFactory.setListener(activity, controls);
-    }
 
-    public static void refresh(){
-        instance.gridView.setAdapter(new CellIntakeHistoryAllAdapter(view.getContext()));
+        controls.filter_DateView.setDate(new Date());
     }
 
     @Override
@@ -71,8 +81,11 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
     public void onClick(Activity activity, View view) {
         ViewHelper v = new ViewHelper(view);
 
-        if(v.idEquals(controls.add_Button))
+        if(v.idEquals(controls.filter_DateView))
+            new DatePickerDialogImpl(activity, getFilter(), new FilterByMonthCommand()).show();
+        else if(v.idEquals(controls.add_Button))
             CSVController.writeTablesToSD();
+
 //            startIntakeImpl();
 //        else if(v.idEquals(controls.intake_Button))
 //            this.intakeImpl(IntakeStatus.INTAKED);
@@ -160,5 +173,27 @@ public class CureIntakeHistoryActivity extends Activity implements View.OnClickL
             return false;
         }
         return true;
+    }
+
+    public static void refresh(){
+        instance.gridView.setAdapter(new CellIntakeHistoryAllAdapter(view.getContext(), getfilteredByMonthRecords(instance.getFilter())));
+    }
+
+    public static List<LastIntakeRecord> getfilteredByMonthRecords(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        Date endDate = calendar.getTime();
+        return DBController.getIntakeHistoryRecordsByMonth(startDate, endDate);
+    }
+
+    public static void setFilter(Date date){
+        instance.controls.filter_DateView.setDate(date);
+    }
+
+    private Date getFilter(){
+        return instance.controls.filter_DateView.getDate();
     }
 }

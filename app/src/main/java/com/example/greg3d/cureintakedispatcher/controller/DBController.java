@@ -1,7 +1,6 @@
 package com.example.greg3d.cureintakedispatcher.controller;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
@@ -11,6 +10,7 @@ import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 import com.example.greg3d.cureintakedispatcher.model.LastIntakeRecord;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.greg3d.cureintakedispatcher.helpers.DBHelper.getRecords;
@@ -35,6 +35,24 @@ public class DBController {
         return instance;
     }
 
+    public static List<LastIntakeRecord> getIntakeHistoryRecordsByMonth(Date startDate, Date endDate) {
+        String query = String.format(
+                " select H.ID as ID, S.ID as SCHEME_ID, S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
+                        " F.NAME as F_NAME, S.INTAKE_IN_DAY_COUNT as D_COUNT, H.STATUS as STATUS, S.DURATION as DURATION," +
+                        " H.DAYS_REMAIND as DAYS_REMAIND " +
+                        " from [INTAKE_HISTORY_TABLE] H, [INTAKE_SCHEME_TABLE] as S, [FARMACY_TABLE] F " +
+                        " where S.ID = H.SCHEME_ID and S.FARMACY_ID = F.ID" +
+        //              " and S.DELETED = 0 " +
+                        " and H.STATUS < 2 " +
+                        " and H.LAST_DATE >= %s " +
+                        " and H.LAST_DATE < %s " +
+                        " ORDER BY H.LAST_DATE DESC"
+                        , startDate.getTime()
+                        , endDate.getTime()
+                );
+        return getIntakeRecords(query);
+    }
+
     public List<LastIntakeRecord> getAllIntakeHistoryRecords() {
         String query =
                 " select H.ID as ID, S.ID as SCHEME_ID, S.NAME as S_NAME, H.LAST_DATE as ACTION_DATE, H.INTAKE_NUM as INTAKE_ID_DAYE_NUM, " +
@@ -57,6 +75,20 @@ public class DBController {
         return DBHelper.getRecords(FarmacyHistoryModel.class, query);
     }
 
+    public static List<FarmacyHistoryModel> getFarmacyHistoryRecordsByDate(Date startDate, Date endDate){
+        String query =
+                String.format(
+                        " SELECT * FROM [FARMACY_HISTORY_TABLE] FH " +
+                        " WHERE DELETED = 0 " +
+                        " AND LAST_DATE >= %s " +
+                        " AND LAST_DATE < %s " +
+                        " ORDER BY LAST_DATE DESC"
+                        ,startDate.getTime()
+                        ,endDate.getTime()
+                );
+        return DBHelper.getRecords(FarmacyHistoryModel.class, query);
+    }
+
 
     public static List<FarmacyHistoryModel> getLastFarmacyHistoryRecords(){
         String query =
@@ -69,8 +101,7 @@ public class DBController {
     }
 
 
-    private List<LastIntakeRecord> getIntakeRecords(String query){
-        Log.d(LOG_TAG, query);
+    private static List<LastIntakeRecord> getIntakeRecords(String query){
         List<LastIntakeRecord> recordList = new ArrayList<>();
         Cursor cursor = DBHelper.getDb().rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -96,7 +127,7 @@ public class DBController {
         return getIntakeRecords(query);
     }
 
-    private LastIntakeRecord fillLastIntakeRecord(Cursor cursor){
+    private static LastIntakeRecord fillLastIntakeRecord(Cursor cursor){
         LastIntakeRecord record = new LastIntakeRecord();
         record.schemeName = String.format("%s %s",
                 cursor.getString(cursor.getColumnIndex("F_NAME")),

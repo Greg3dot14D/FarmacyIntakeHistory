@@ -18,8 +18,10 @@ import com.example.greg3d.cureintakedispatcher.activities.curehistoryall.CureHis
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.CureIntakeActivity;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.CureIntakeHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.activities.flipper.adapters.SamplePagerAdapter;
-import com.example.greg3d.cureintakedispatcher.controller.CSVController;
+import com.example.greg3d.cureintakedispatcher.activities.flipper.commands.ImportFilesCommand;
+import com.example.greg3d.cureintakedispatcher.constants.Settings;
 import com.example.greg3d.cureintakedispatcher.dialog.MessageDialog;
+import com.example.greg3d.cureintakedispatcher.dialog.YesNoDialog;
 import com.example.greg3d.cureintakedispatcher.drawers.NavigationDrawerFragment;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         SamplePagerAdapter pagerAdapter = new SamplePagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(2);
 
         //setContentView(viewPager);
 
@@ -105,6 +107,8 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View view) {
         cureIntakeActivity.onClick(this, view);
         cureHistoryActivity.onClick(this, view);
+        cureHistoryAllActivity.onClick(this, view);
+        cureIntakeHistoryActivity.onClick(this, view);
     }
 
     @Override
@@ -117,11 +121,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_import) {
-            CSVController.readTablesFromSD();
-            CureHistoryActivity.refresh();
-            CureIntakeActivity.refresh();
+            new YesNoDialog(this, new ImportFilesCommand(), "Выполнить инпорт из внешних файлов ?\nДанные в БД будут похерены !!!").show();
         } else if (id == R.id.nav_export) {
-            CSVController.writeTablesToSD();
+            new YesNoDialog(this, new ImportFilesCommand(), String.format("Выполнить экспорт БД во внешние файлы ?\n фалы попадут в папку '%s'", Settings.EXTERNAL_FILES_DIRECTORY)).show();
         } else if (id == R.id.nav_about) {
             new MessageDialog(this, "Эбаот", "Farmacy intake dispatcher\nWriten for Max Reziapkin\n\nBy Greg3D 06.11.2017");
         }

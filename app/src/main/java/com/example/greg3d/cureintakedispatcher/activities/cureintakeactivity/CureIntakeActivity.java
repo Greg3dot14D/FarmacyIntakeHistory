@@ -8,11 +8,16 @@ import android.widget.TextView;
 
 import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.adapters.CellAdapter;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.commands.CancelIntakeCommand;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.commands.ConfirmIntakeCommand;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.commands.DeleteIntakeCommand;
+import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.commands.StartIntakeCommand;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeactivity.controls.Controls;
 import com.example.greg3d.cureintakedispatcher.activities.cureintakeall.CureIntakeHistoryActivity;
 import com.example.greg3d.cureintakedispatcher.activities.editintake.EditIntakeActivity;
 import com.example.greg3d.cureintakedispatcher.constants.IntakeStatus;
 import com.example.greg3d.cureintakedispatcher.constants.State;
+import com.example.greg3d.cureintakedispatcher.dialog.YesNoDialog;
 import com.example.greg3d.cureintakedispatcher.fakes.Show;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory;
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
@@ -83,11 +88,14 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
         ViewHelper v = new ViewHelper(view);
 
         if(v.idEquals(controls.start_Button))
-            startIntakeImpl();
+            //startIntakeImpl();
+            new YesNoDialog(activity, new StartIntakeCommand(), "Начинаем курс по новой ?").show();
         else if(v.idEquals(controls.intake_Button) && isSelected())
-            this.intakeImpl(IntakeStatus.INTAKED);
+            //this.intakeImpl(IntakeStatus.INTAKED);
+            new YesNoDialog(activity, new ConfirmIntakeCommand(), "Принимаем пилюльку ?").show();
         else if(v.idEquals(controls.cancel_Button))
-            this.intakeImpl(IntakeStatus.CANCELED);
+            //this.intakeImpl(IntakeStatus.CANCELED);
+            new YesNoDialog(activity, new CancelIntakeCommand(), "Пропускаем пилюльку ?").show();
         else if(v.idEquals(controls.add_Button)) {
             EditIntakeActivity.state = State.ADD;
             ActivitiesManager.startEditIntakeActivity(activity);
@@ -102,10 +110,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
         else if(v.idEquals(controls.del_Button)){
             if(!isSelected())
                 return;
-            SchemeModel model = new SchemeModel();
-            model.id = Integer.valueOf(String.valueOf(getSelectedSchemeId()));
-            DBHelper.getInstance().deleteRecord(model);
-            refresh();
+            new YesNoDialog(activity, new DeleteIntakeCommand(), "Удаляем схемку ?").show();
         }
     }
 
@@ -134,7 +139,7 @@ public class CureIntakeActivity <T extends LastIntakeRecord> extends Activity im
         refresh();
     }
 
-    private void intakeImpl(int status){
+    public static void intakeImpl(int status){
         DBHelper db = DBHelper.getInstance();
         Date lastDate = new Date();
 

@@ -10,6 +10,7 @@ import com.example.greg3d.cureintakedispatcher.R;
 import com.example.greg3d.cureintakedispatcher.controller.DBController;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,8 +22,17 @@ public class CellAdapter extends ArrayAdapter<FarmacyHistoryModel>
         super(context, R.layout.cure_cell, getData());
     }
 
+    public CellAdapter(Context context, List<FarmacyHistoryModel> data) {
+        super(context, R.layout.cure_cell, data);
+    }
+
+
     private static List<FarmacyHistoryModel> getData(){
         return DBController.getAllFarmacyHistoryRecords();
+    }
+
+    private static List<FarmacyHistoryModel> getData(Date startDate, Date endDate){
+        return DBController.getFarmacyHistoryRecordsByDate(startDate, endDate);
     }
 
     @Override

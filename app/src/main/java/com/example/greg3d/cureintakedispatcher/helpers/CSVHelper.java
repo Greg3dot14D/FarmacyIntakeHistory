@@ -3,6 +3,7 @@ package com.example.greg3d.cureintakedispatcher.helpers;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.greg3d.cureintakedispatcher.constants.Settings;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 
@@ -27,7 +28,7 @@ public class CSVHelper {
     private static CSVHelper instance;
     private String LOG_TAG = "CSVHELPER";
 
-    private String DIR_SD = "Download/cure.intake";
+    private String DIR_SD = Settings.EXTERNAL_FILES_DIRECTORY;
     //private String DIR_SD = "Download/android";
     private String FILENAME_SD = "fakedata.csv";
 

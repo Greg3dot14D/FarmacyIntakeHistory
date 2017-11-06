@@ -22,6 +22,10 @@ public class CellIntakeHistoryAllAdapter extends ArrayAdapter<LastIntakeRecord>
         super(context, R.layout.schemecell, getData());
     }
 
+    public CellIntakeHistoryAllAdapter(Context context, List<LastIntakeRecord> data) {
+        super(context, R.layout.schemecell, data);
+    }
+
     private static List<LastIntakeRecord> getData(){
         return DBController.getInstance().getAllIntakeHistoryRecords();
     }
