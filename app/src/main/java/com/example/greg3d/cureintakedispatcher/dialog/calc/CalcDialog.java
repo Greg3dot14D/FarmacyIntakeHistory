@@ -14,6 +14,7 @@ import com.example.greg3d.cureintakedispatcher.framework.factory.ActivityFactory
 import com.example.greg3d.cureintakedispatcher.framework.factory.ViewFactory;
 
 import java.lang.reflect.Field;
+import java.util.regex.Pattern;
 
 /**
  * Created by greg3d on 29.10.17.
@@ -77,6 +78,12 @@ public class CalcDialog extends DialogFragment implements View.OnClickListener{
                 e.printStackTrace();
             }
         }
-        controls.b_text_TextView.setText(result);
+        controls.b_text_TextView.setText(getValidPrice(result));
+    }
+    private static String getValidPrice(String value){
+        String regexp = "(([0-9]){1,9}|(([0-9]){1,9}\\.([0-9]){0,2}))";
+        if(Pattern.matches(regexp, value))
+            return value;
+        return getValidPrice(value.substring(0, value.length()-1));
     }
 }

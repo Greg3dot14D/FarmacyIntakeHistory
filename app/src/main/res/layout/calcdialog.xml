@@ -117,39 +117,31 @@
                 android:text="." />
 
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:id="@+id/calc_fake1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:gravity="right"
-                android:text=""
-                android:textSize="30dp"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/calc_fake2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:gravity="right"
-                android:text="" />
-
-            <Button
-                android:id="@+id/calc_Ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ok" />
-        </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/calc_fake2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="0.6"
+            android:text=""/>
+        <Button
+            android:id="@+id/calc_Ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:text="Ok" />
+        <TextView
+            android:id="@+id/calc_fake3"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="0.6"
+            android:text=""/>
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -23,7 +23,6 @@ import com.example.greg3d.cureintakedispatcher.activities.flipper.commands.Impor
 import com.example.greg3d.cureintakedispatcher.constants.Settings;
 import com.example.greg3d.cureintakedispatcher.dialog.MessageDialog;
 import com.example.greg3d.cureintakedispatcher.dialog.YesNoDialog;
-import com.example.greg3d.cureintakedispatcher.drawers.NavigationDrawerFragment;
 import com.example.greg3d.cureintakedispatcher.helpers.DBHelper;
 
 import java.util.ArrayList;
@@ -34,14 +33,12 @@ import java.util.List;
  *
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+        implements  View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private CureIntakeActivity cureIntakeActivity;
     private CureIntakeHistoryActivity cureIntakeHistoryActivity;
     private CureHistoryActivity cureHistoryActivity;
     private CureHistoryAllActivity cureHistoryAllActivity;
-
-    private NavigationDrawerFragment drawerFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,10 +107,6 @@ public class MainActivity extends AppCompatActivity
         cureHistoryActivity.onClick(this, view);
         cureHistoryAllActivity.onClick(this, view);
         cureIntakeHistoryActivity.onClick(this, view);
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

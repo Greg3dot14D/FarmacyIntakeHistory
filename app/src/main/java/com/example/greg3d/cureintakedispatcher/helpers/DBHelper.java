@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.greg3d.cureintakedispatcher.fakes.FakeData;
 import com.example.greg3d.cureintakedispatcher.framework.annotations.Name;
 import com.example.greg3d.cureintakedispatcher.model.BaseModel;
 import com.example.greg3d.cureintakedispatcher.model.FarmacyHistoryModel;
@@ -32,13 +31,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         // конструктор суперкласса
         super(context, "myDB", null, 1);
-        Log.d(LOG_TAG, "DBHelper Starts");
         this.db = this.getWritableDatabase();
-        Log.d(LOG_TAG, "getWritableDatabase Done");
-//
         instance = this;
-
-        new FakeData(this).createFakes();
+        // TODO - вернуть atqrb
+        //new FakeData(this).createFakes();
     }
 
     public static DBHelper getInstance(){

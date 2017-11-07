@@ -93,7 +93,7 @@ public class CureHistoryActivity extends Activity implements View.OnClickListene
             ActivitiesManager.startCureEditActivity(activity,0);
         }
         else if(v.idEquals(controls.del_Button) && isSelected())
-            new YesNoDialog(activity, new DeleteCureCommand(), "Удаяем пилюльку ?").show();
+            new YesNoDialog(activity, new DeleteCureCommand(), "Удаляем пилюльку ?").show();
     }
 
     private boolean isSelected(){

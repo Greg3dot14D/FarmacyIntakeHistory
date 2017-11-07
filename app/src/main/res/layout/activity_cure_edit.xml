@@ -9,7 +9,9 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        >
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -19,7 +21,7 @@
                 android:layout_height="40dp"
                 android:gravity="bottom"
                 android:layout_weight="0.2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="20dp"
                 android:text="Название" />
             <EditText
@@ -40,7 +42,7 @@
                 android:layout_height="40dp"
                 android:gravity="bottom"
                 android:layout_weight="0.2"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="20dp"
                 android:text="Объем" />
             <EditText
@@ -61,7 +63,7 @@
             android:layout_height="40dp"
             android:gravity="bottom"
             android:layout_weight="0.2"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:textSize="20dp"
             android:text="Цена" />
         <TextView
@@ -71,6 +73,7 @@
             android:gravity="bottom"
             android:layout_weight="0.8"
             android:textSize="20dp"
+            android:layout_marginLeft="10dp"
             android:inputType="numberDecimal"
             android:text="0.00" />
         </TableRow>
@@ -83,7 +86,7 @@
             android:layout_height="40dp"
             android:gravity="bottom"
             android:layout_weight="0.2"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:textSize="20dp"
             android:text="Дата покупки" />
         <TextView
@@ -92,6 +95,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_weight="0.8"
+            android:layout_marginLeft="10dp"
             android:textSize="20dp"
             android:inputType="date"
             android:text="Дата покупки" />
@@ -105,7 +109,7 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25px"
+            android:layout_marginBottom="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="0.95"
